@@ -1,0 +1,41 @@
+{
+  "env": {
+    "node": true, // this is the best starting point
+    "browser": true, // for react web
+    "es6": true // enables es6 features
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/eslint-recommended"
+  ],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "plugins": ["react", "@typescript-eslint"],
+  "rules": {},
+  "settings": {
+    "react": {
+      "pragma": "React",
+      "version": "detect"
+    }
+    // "propWrapperFunctions": [
+    //   "forbidExtraProps",
+    //   { "property": "freeze", "object": "Object" },
+    //   { "property": "myFavoriteWrapper" }
+    // ],
+    // "linkComponents": [
+    //   "Hyperlink",
+    //   { "name": "Link", "linkAttribute": "to" }
+    // ]
+  }
+}
