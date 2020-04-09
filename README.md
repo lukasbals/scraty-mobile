@@ -32,11 +32,11 @@ src
 ## Available commands
 
 ```bash
-yarn install # To install dependencies
+npm install # To install dependencies
 
-yarn start # To start the local development server
+npm start # To start the local development server
 
-yarn run [ios|android|web] # To run the app on specific platform
+npm run [ios|android|web] # To run the app on specific platform
 
-yarn run lint # To lint the project
+npm run lint # To lint the project
 ```
