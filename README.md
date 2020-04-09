@@ -16,7 +16,7 @@ component, the `MainFeature.tsx` component itself, and all the other files (styl
 tests, data fetchers) should be placed within the component folder.
 
 ```
-components
+src
 ├── features
 │   └── MainFeature
 │       ├── MainFeature.tsx
