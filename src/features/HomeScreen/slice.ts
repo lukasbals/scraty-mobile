@@ -7,11 +7,12 @@ const boardsSlice = createSlice({
     loading: false,
   },
   reducers: {
-    loadBoardsFromStorageStart: (state) => ({
-      ...state,
-      loading: true,
-    }),
-    loadBoardsFromStorageSuccess: (state, { payload }) => ({
+    loadBoardsFromStorageStart: (state) => ({ ...state, loading: true }),
+    // eslint-disable-next-line no-unused-vars
+    addBoardStart: (state, { payload }) => ({ ...state, loading: true }),
+    // eslint-disable-next-line no-unused-vars
+    removeBoardStart: (state, { payload }) => ({ ...state, loading: true }),
+    updateBoards: (state, { payload }) => ({
       ...state,
       loading: false,
       boards: payload,
@@ -21,7 +22,9 @@ const boardsSlice = createSlice({
 
 export const {
   loadBoardsFromStorageStart,
-  loadBoardsFromStorageSuccess,
+  addBoardStart,
+  removeBoardStart,
+  updateBoards,
 } = boardsSlice.actions;
 
 export default boardsSlice.reducer;
