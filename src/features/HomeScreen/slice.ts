@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const boardsSlice = createSlice({
-  name: "todos",
+  name: "boards",
   initialState: {
     boards: [],
     loading: false,

@@ -4,6 +4,7 @@ import {
   addBoardWatcher,
   removeBoardWatcher,
 } from "./features/HomeScreen/saga";
+import { loadStoriesFromBackendWatcher } from "./features/StoriesScreen/saga";
 
 function* scratySaga() {
   yield all([
@@ -15,6 +16,9 @@ function* scratySaga() {
 
     // Remove a board
     removeBoardWatcher(),
+
+    // Load stories from backend
+    loadStoriesFromBackendWatcher(),
   ]);
 }
 
