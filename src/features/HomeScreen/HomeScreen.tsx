@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, Text, Button } from "react-native";
+import { View, Alert, ActivityIndicator } from "react-native";
 import styles from "./styles";
 import {
   loadBoardsFromStorageStart,
@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getBoards, getLoading } from "./seletor";
 // eslint-disable-next-line no-unused-vars
 import Board from "../../models/Board";
+import CustomListView from "../../shared/ListView";
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
@@ -30,27 +31,23 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Hello world!</Text>
-      <Text>Boards:</Text>
       {loading ? (
-        <Text>Loading...</Text>
+        <ActivityIndicator size="large" color="#0000ff" />
       ) : (
-        boards.map((board: Board) => (
-          <Text key={board.id} onPress={() => removeBoard(board.id)}>
-            {board.name}
-          </Text>
-        ))
+        <CustomListView
+          items={boards}
+          itemClickFunc={(id: number) => Alert.alert("Item " + id + " pressed")}
+          addFunc={() =>
+            addBoard({
+              title: "New board",
+              url: "",
+              id: new Date().getMilliseconds(),
+            })
+          }
+          editFunc={(id: number) => Alert.alert("Edit pressed on item: " + id)}
+          deleteFunc={(id: number) => removeBoard(id)}
+        />
       )}
-      <Button
-        title="Add board"
-        onPress={() =>
-          addBoard({
-            name: "New board",
-            url: "",
-            id: new Date().getMilliseconds(),
-          })
-        }
-      />
     </View>
   );
 };

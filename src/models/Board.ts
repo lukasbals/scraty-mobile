@@ -1,7 +1,8 @@
-interface Board {
-  id: number;
+// eslint-disable-next-line no-unused-vars
+import CommonFields from "./CommonFields";
+
+interface Board extends CommonFields {
   url: string;
-  name: string;
 }
 
 export default Board;
