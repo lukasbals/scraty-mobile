@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
-import { Text, View } from "react-native";
+import { ActivityIndicator } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { loadStoriesFromBackendStart } from "./slice";
 import { getStories, getLoading } from "./selector";
+import CustomListView from "../../shared/ListView";
 
 function StoriesScreen() {
   const dispatch = useDispatch();
@@ -14,12 +15,15 @@ function StoriesScreen() {
   }, []);
 
   return loading ? (
-    <Text>Loading...</Text>
+    <ActivityIndicator size="large" color="#0000ff" />
   ) : (
-    <View>
-      {stories &&
-        stories.map((story: any) => <Text key={story.id}>{story.text}</Text>)}
-    </View>
+    <CustomListView
+      items={stories}
+      itemClickFunc={null}
+      addFunc={null}
+      editFunc={null}
+      deleteFunc={null}
+    />
   );
 }
 
