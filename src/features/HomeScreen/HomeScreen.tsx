@@ -8,11 +8,17 @@ import {
 } from "./slice";
 import { useDispatch, useSelector } from "react-redux";
 import { getBoards, getLoading } from "./seletor";
+import CustomListView from "../../shared/ListView";
 // eslint-disable-next-line no-unused-vars
 import Board from "../../models/Board";
-import CustomListView from "../../shared/ListView";
+// eslint-disable-next-line no-unused-vars
+import { StackNavigationProp } from "@react-navigation/stack";
 
-const HomeScreen = () => {
+interface PropTypes {
+  navigation: StackNavigationProp<any, any>;
+}
+
+const HomeScreen = ({ navigation }: PropTypes) => {
   const dispatch = useDispatch();
   const boards: Board[] = useSelector(getBoards);
   const loading: boolean = useSelector(getLoading);
@@ -29,25 +35,29 @@ const HomeScreen = () => {
     dispatch(removeBoardStart(id));
   };
 
+  if (loading || !boards) {
+    return <ActivityIndicator size="large" color="#0000ff" />;
+  }
+
   return (
     <View style={styles.container}>
-      {loading ? (
-        <ActivityIndicator size="large" color="#0000ff" />
-      ) : (
-        <CustomListView
-          items={boards}
-          itemClickFunc={(id: number) => Alert.alert("Item " + id + " pressed")}
-          addFunc={() =>
-            addBoard({
-              title: "New board",
-              url: "",
-              id: new Date().getMilliseconds(),
-            })
-          }
-          editFunc={(id: number) => Alert.alert("Edit pressed on item: " + id)}
-          deleteFunc={(id: number) => removeBoard(id)}
-        />
-      )}
+      <CustomListView
+        items={boards}
+        itemClickFunc={(id: number) =>
+          navigation.push("Stories", {
+            board: boards.find((board: Board) => board.id === id),
+          })
+        }
+        addFunc={() =>
+          addBoard({
+            title: "New board",
+            url: "http://192.168.178.24:8080/api/stories/",
+            id: new Date().getMilliseconds(),
+          })
+        }
+        editFunc={(id: number) => Alert.alert("Edit pressed on item: " + id)}
+        deleteFunc={(id: number) => removeBoard(id)}
+      />
     </View>
   );
 };

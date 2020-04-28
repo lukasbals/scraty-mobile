@@ -1,55 +1,69 @@
-import React, { useState } from 'react';
-import { View, Dimensions} from 'react-native';
-import { TabView, SceneMap } from 'react-native-tab-view';
+import React, { useState, useEffect } from "react";
+import { View, Dimensions } from "react-native";
+import { TabView, SceneMap } from "react-native-tab-view";
 import styles from "./styles";
+// eslint-disable-next-line no-unused-vars
+import Story from "../../models/Story";
 
 const routes = [
-    { key: 'ToDo', title: 'ToDo' },
-    { key: 'InProgress', title: 'In Progress' },
-    { key: 'Verify', title: 'Verify' },
-    { key: 'Done', title: 'Done' },
+  { key: "ToDo", title: "ToDo" },
+  { key: "InProgress", title: "In Progress" },
+  { key: "Verify", title: "Verify" },
+  { key: "Done", title: "Done" },
 ];
 
 const ToDoRoute = () => (
-    // put component here, or direct feed with tasks
-    <View style={[styles.scene, { backgroundColor: '#ff4081' }]} />
+  // put component here, or direct feed with tasks
+  <View style={[styles.scene, { backgroundColor: "#ff4081" }]} />
 );
 
 const InProgressRoute = () => (
-    // put component here, or direct feed with tasks
-    <View style={[styles.scene, { backgroundColor: '#673ab7' }]} />
+  // put component here, or direct feed with tasks
+  <View style={[styles.scene, { backgroundColor: "#673ab7" }]} />
 );
 
 const VerifyRoute = () => (
-    // put component here, or direct feed with tasks
-    <View style={[styles.scene, { backgroundColor: '#ff4081' }]} />
+  // put component here, or direct feed with tasks
+  <View style={[styles.scene, { backgroundColor: "#ff4081" }]} />
 );
 
 const DoneRoute = () => (
-    // put component here, or direct feed with tasks
-    <View style={[styles.scene, { backgroundColor: '#673ab7' }]} />
+  // put component here, or direct feed with tasks
+  <View style={[styles.scene, { backgroundColor: "#673ab7" }]} />
 );
 
-const initialLayout = { width: Dimensions.get('window').width };
+const initialLayout = { width: Dimensions.get("window").width };
 
-function TaskScreen() {
-    const [index, setIndex] = useState(0);
+interface PropTypes {
+  route: {
+    params: {
+      story: Story;
+    };
+  };
+}
 
-    const renderScene = SceneMap({
-        ToDo: ToDoRoute,
-        InProgress: InProgressRoute,
-        Verify: VerifyRoute,
-        Done: DoneRoute
-    });
+function TaskScreen({ route }: PropTypes) {
+  const [index, setIndex] = useState(0);
 
-    return (
-        <TabView
-            navigationState={{ index, routes }}
-            renderScene={renderScene}
-            onIndexChange={setIndex}
-            initialLayout={initialLayout}
-        />
-    );
+  useEffect(() => {
+    console.log("Story ID: ", route.params.story);
+  }, []);
+
+  const renderScene = SceneMap({
+    ToDo: ToDoRoute,
+    InProgress: InProgressRoute,
+    Verify: VerifyRoute,
+    Done: DoneRoute,
+  });
+
+  return (
+    <TabView
+      navigationState={{ index, routes }}
+      renderScene={renderScene}
+      onIndexChange={setIndex}
+      initialLayout={initialLayout}
+    />
+  );
 }
 
 export default TaskScreen;

@@ -7,7 +7,11 @@ const storiesSlice = createSlice({
     loading: false,
   },
   reducers: {
-    loadStoriesFromBackendStart: (state) => ({ ...state, loading: true }),
+    // eslint-disable-next-line no-unused-vars
+    loadStoriesFromBackendStart: (state, { payload }) => ({
+      ...state,
+      loading: true,
+    }),
     updateStories: (state, { payload }) => ({
       ...state,
       loading: false,
