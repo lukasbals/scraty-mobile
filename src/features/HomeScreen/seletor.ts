@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 import Board from "../../models/Board";
 
 export const getBoards = (state: any): Board[] => state.boards.boards;

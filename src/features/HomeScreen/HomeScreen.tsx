@@ -9,9 +9,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { getBoards, getLoading } from "./seletor";
 import CustomListView from "../../shared/ListView";
-// eslint-disable-next-line no-unused-vars
 import Board from "../../models/Board";
-// eslint-disable-next-line no-unused-vars
 import { StackNavigationProp } from "@react-navigation/stack";
 
 interface PropTypes {

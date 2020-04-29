@@ -8,7 +8,6 @@ import {
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import styles from "./styles";
-// eslint-disable-next-line no-unused-vars
 import Task from "../../models/Task";
 
 function hashCode(str: string) {

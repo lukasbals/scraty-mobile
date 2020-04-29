@@ -6,7 +6,6 @@ import {
   removeBoardStart,
 } from "./slice";
 import { AsyncStorage } from "react-native";
-// eslint-disable-next-line no-unused-vars
 import Board from "../../models/Board";
 
 function* loadBoardsFromStorageWorker() {

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { View, Dimensions } from "react-native";
 import { TabView, SceneMap } from "react-native-tab-view";
 import styles from "./styles";
-// eslint-disable-next-line no-unused-vars
 import Story from "../../models/Story";
 
 const routes = [

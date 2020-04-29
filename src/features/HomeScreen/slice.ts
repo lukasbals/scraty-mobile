@@ -8,9 +8,9 @@ const boardsSlice = createSlice({
   },
   reducers: {
     loadBoardsFromStorageStart: (state) => ({ ...state, loading: true }),
-    // eslint-disable-next-line no-unused-vars
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     addBoardStart: (state, { payload }) => ({ ...state, loading: true }),
-    // eslint-disable-next-line no-unused-vars
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     removeBoardStart: (state, { payload }) => ({ ...state, loading: true }),
     updateBoards: (state, { payload }) => ({
       ...state,

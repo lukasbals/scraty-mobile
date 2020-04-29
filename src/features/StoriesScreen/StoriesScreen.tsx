@@ -4,11 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { loadStoriesFromBackendStart } from "./slice";
 import { getStories, getLoading } from "./selector";
 import CustomListView from "../../shared/ListView";
-// eslint-disable-next-line no-unused-vars
 import Story from "../../models/Story";
-// eslint-disable-next-line no-unused-vars
 import Board from "../../models/Board";
-// eslint-disable-next-line no-unused-vars
 import { StackNavigationProp } from "@react-navigation/stack";
 
 export interface StoriesScreenPropTypes {

@@ -3,7 +3,6 @@ import { SafeAreaView, FlatList, TouchableOpacity } from "react-native";
 import styles from "./styles";
 import { AntDesign } from "@expo/vector-icons";
 import ListItem from "../ListItem/ListItem";
-// eslint-disable-next-line no-unused-vars
 import CommonFields from "../../models/CommonFields";
 
 interface PropTypes {

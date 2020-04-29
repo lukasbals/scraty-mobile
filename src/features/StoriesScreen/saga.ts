@@ -1,6 +1,5 @@
 import { takeEvery, put } from "redux-saga/effects";
 import { updateStories, loadStoriesFromBackendStart } from "./slice";
-// eslint-disable-next-line no-unused-vars
 import Board from "../../models/Board";
 
 interface loadStoriesFromBackendWorkerProps {
