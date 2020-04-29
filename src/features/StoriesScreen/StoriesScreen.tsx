@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { ActivityIndicator } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { loadStoriesFromBackendStart } from "./slice";
 import { getStories, getLoading } from "./selector";
@@ -7,6 +6,7 @@ import CustomListView from "../../shared/ListView";
 import Story from "../../models/Story";
 import Board from "../../models/Board";
 import { StackNavigationProp } from "@react-navigation/stack";
+import LoadingScreen from "../../shared/LoadingScreen";
 
 export interface StoriesScreenPropTypes {
   navigation: StackNavigationProp<any, any>;
@@ -26,9 +26,7 @@ function StoriesScreen({ route, navigation }: StoriesScreenPropTypes) {
     dispatch(loadStoriesFromBackendStart(route.params.board));
   }, []);
 
-  if (loading || !stories) {
-    return <ActivityIndicator size="large" color="#0000ff" />;
-  }
+  if (loading || !stories) <LoadingScreen />;
 
   const displayedStories = stories.map((story: Story) => {
     return {

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, Alert, ActivityIndicator } from "react-native";
+import { View, Alert } from "react-native";
 import styles from "./styles";
 import {
   loadBoardsFromStorageStart,
@@ -11,6 +11,7 @@ import { getBoards, getLoading } from "./seletor";
 import CustomListView from "../../shared/ListView";
 import Board from "../../models/Board";
 import { StackNavigationProp } from "@react-navigation/stack";
+import LoadingScreen from "../../shared/LoadingScreen";
 
 interface PropTypes {
   navigation: StackNavigationProp<any, any>;
@@ -33,9 +34,7 @@ const HomeScreen = ({ navigation }: PropTypes) => {
     dispatch(removeBoardStart(id));
   };
 
-  if (loading || !boards) {
-    return <ActivityIndicator size="large" color="#0000ff" />;
-  }
+  if (loading || !boards) <LoadingScreen />;
 
   return (
     <View style={styles.container}>
