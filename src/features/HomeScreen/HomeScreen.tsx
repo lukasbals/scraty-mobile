@@ -34,7 +34,7 @@ const HomeScreen = ({ navigation }: PropTypes) => {
     dispatch(removeBoardStart(id));
   };
 
-  if (loading || !boards) <LoadingScreen />;
+  if (loading || !boards) return <LoadingScreen />;
 
   return (
     <View style={styles.container}>
@@ -54,6 +54,7 @@ const HomeScreen = ({ navigation }: PropTypes) => {
         }
         editFunc={(id: number) => Alert.alert("Edit pressed on item: " + id)}
         deleteFunc={(id: number) => removeBoard(id)}
+        emptyText="There are no boards yet"
       />
     </View>
   );

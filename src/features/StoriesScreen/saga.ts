@@ -1,5 +1,9 @@
 import { takeEvery, put } from "redux-saga/effects";
-import { updateStories, loadStoriesFromBackendStart } from "./slice";
+import {
+  updateStories,
+  loadStoriesFromBackendStart,
+  loadStoriesError,
+} from "./slice";
 import Board from "../../models/Board";
 
 interface loadStoriesFromBackendWorkerProps {
@@ -10,12 +14,13 @@ function* loadStoriesFromBackendWorker({
   payload,
 }: loadStoriesFromBackendWorkerProps) {
   try {
-    // TODO: Pass the url to fetch the board and fetch the stories
-    // for the given board
     const response = yield fetch(payload.url).then((res) => res.json());
-    yield put(updateStories(response.stories));
+    if (response) {
+      yield put(updateStories(response.stories));
+    }
   } catch (error) {
-    console.error("Error while loading stories from backend", error);
+    yield put(loadStoriesError(error));
+    console.info("Error while loading stories from backend", error);
   }
 }
 

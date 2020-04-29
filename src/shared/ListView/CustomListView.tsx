@@ -1,5 +1,11 @@
 import React from "react";
-import { SafeAreaView, FlatList, TouchableOpacity } from "react-native";
+import {
+  SafeAreaView,
+  FlatList,
+  TouchableOpacity,
+  View,
+  Text,
+} from "react-native";
 import styles from "./styles";
 import { AntDesign } from "@expo/vector-icons";
 import ListItem from "../ListItem/ListItem";
@@ -11,6 +17,7 @@ interface PropTypes {
   addFunc: Function | null;
   editFunc: Function | null;
   deleteFunc: Function | null;
+  emptyText: string | null;
 }
 
 const CustomListView = (props: PropTypes) => {
@@ -22,21 +29,26 @@ const CustomListView = (props: PropTypes) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {
-        <FlatList
-          style={styles.container}
-          data={props.items}
-          renderItem={({ item }) => (
-            <ListItem
-              common={item}
-              onClickFunc={props.itemClickFunc}
-              editFunc={props.editFunc}
-              deleteFunc={props.deleteFunc}
-            />
-          )}
-          keyExtractor={(item) => item.id.toString()}
-        />
-      }
+      {props.items.length === 0 && (
+        <View style={styles.emptyView}>
+          <Text style={styles.emptyText}>{props.emptyText}</Text>
+          <Text>To create a new one hit the + below</Text>
+        </View>
+      )}
+      <FlatList
+        style={styles.container}
+        data={props.items}
+        renderItem={({ item }) => (
+          <ListItem
+            common={item}
+            onClickFunc={props.itemClickFunc}
+            editFunc={props.editFunc}
+            deleteFunc={props.deleteFunc}
+          />
+        )}
+        keyExtractor={(item) => item.id.toString()}
+      />
+
       {props.addFunc != null && (
         <TouchableOpacity style={styles.addButton} onPress={handleAdd}>
           <AntDesign name="pluscircle" size={45} color="orange" />

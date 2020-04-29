@@ -14,7 +14,7 @@ function* loadBoardsFromStorageWorker() {
     const boards = value !== null ? JSON.parse(value) : [];
     yield put(updateBoards(boards));
   } catch (error) {
-    console.error("Error while loading boards from AsyncStorage");
+    console.info("Error while loading boards from AsyncStorage");
   }
 }
 
@@ -28,7 +28,7 @@ function* addBoardWorker({ payload }: any) {
     yield call(AsyncStorage.setItem, "boards", JSON.stringify(boards));
     yield put(updateBoards(boards));
   } catch (error) {
-    console.error("Error while adding new board to the AsyncStorage");
+    console.info("Error while adding new board to the AsyncStorage");
   }
 }
 
@@ -42,7 +42,7 @@ function* removeBoardWorker({ payload }: any) {
     yield call(AsyncStorage.setItem, "boards", JSON.stringify(newBoards));
     yield put(updateBoards(newBoards));
   } catch (error) {
-    console.error("Error while adding new board to the AsyncStorage");
+    console.info("Error while removing a board from the AsyncStorage");
   }
 }
 

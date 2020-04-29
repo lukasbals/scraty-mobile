@@ -4,7 +4,7 @@ const boardsSlice = createSlice({
   name: "boards",
   initialState: {
     boards: [],
-    loading: false,
+    loading: true,
   },
   reducers: {
     loadBoardsFromStorageStart: (state) => ({ ...state, loading: true }),

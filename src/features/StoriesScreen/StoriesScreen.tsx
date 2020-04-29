@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loadStoriesFromBackendStart } from "./slice";
-import { getStories, getLoading } from "./selector";
+import { getStories, getLoading, getError } from "./selector";
 import CustomListView from "../../shared/ListView";
 import Story from "../../models/Story";
 import Board from "../../models/Board";
 import { StackNavigationProp } from "@react-navigation/stack";
 import LoadingScreen from "../../shared/LoadingScreen";
+import ErrorScreen from "../../shared/ErrorScreen";
 
 export interface StoriesScreenPropTypes {
   navigation: StackNavigationProp<any, any>;
@@ -21,12 +22,25 @@ function StoriesScreen({ route, navigation }: StoriesScreenPropTypes) {
   const dispatch = useDispatch();
   const loading = useSelector(getLoading);
   const stories = useSelector(getStories);
+  const error = useSelector(getError);
 
   useEffect(() => {
     dispatch(loadStoriesFromBackendStart(route.params.board));
   }, []);
 
-  if (loading || !stories) <LoadingScreen />;
+  const reloadStories = () => {
+    dispatch(loadStoriesFromBackendStart(route.params.board));
+  };
+
+  if (error)
+    return (
+      <ErrorScreen
+        retry={reloadStories}
+        message="An error happened while loading the stories - please check if the backend of the board is still running"
+      />
+    );
+
+  if (loading) return <LoadingScreen />;
 
   const displayedStories = stories.map((story: Story) => {
     return {
@@ -45,6 +59,7 @@ function StoriesScreen({ route, navigation }: StoriesScreenPropTypes) {
       addFunc={null}
       editFunc={null}
       deleteFunc={null}
+      emptyText="There are no stories yet"
     />
   );
 }
