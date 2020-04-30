@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, Alert } from "react-native";
+import { View, Alert, AsyncStorage } from "react-native";
 import styles from "./styles";
 import {
   loadBoardsFromStorageStart,
@@ -26,6 +26,20 @@ const HomeScreen = ({ navigation }: PropTypes) => {
     dispatch(loadBoardsFromStorageStart());
   }, []);
 
+  useEffect(() => {
+    const checkIfBoardIsSelected = async () => {
+      if (!navigation.canGoBack()) {
+        const selectedBoardValue = await AsyncStorage.getItem("selectedBoard");
+        const selectedBoard = selectedBoardValue
+          ? JSON.parse(selectedBoardValue)
+          : null;
+        if (selectedBoard) navigation.push("Stories", { board: selectedBoard });
+      }
+    };
+
+    checkIfBoardIsSelected();
+  }, []);
+
   const addBoard = (board: Board) => {
     dispatch(addBoardStart(board));
   };
@@ -40,11 +54,13 @@ const HomeScreen = ({ navigation }: PropTypes) => {
     <View style={styles.container}>
       <CustomListView
         items={boards}
-        itemClickFunc={(id: number) =>
+        itemClickFunc={(id: number) => {
+          const board = boards.find((board: Board) => board.id === id);
+          AsyncStorage.setItem("selectedBoard", JSON.stringify(board));
           navigation.push("Stories", {
-            board: boards.find((board: Board) => board.id === id),
-          })
-        }
+            board: board,
+          });
+        }}
         addFunc={() =>
           addBoard({
             title: "New board",
