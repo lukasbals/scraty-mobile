@@ -1,6 +1,11 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { loadStoriesFromBackendStart } from "./slice";
+import {
+  loadStoriesFromBackendStart,
+  addStory,
+  deleteStory,
+  updateStory,
+} from "./slice";
 import { getStories, getLoading, getError } from "./selector";
 import CustomListView from "../../shared/ListView";
 import Story from "../../models/Story";
@@ -26,6 +31,32 @@ function StoriesScreen({ route, navigation }: StoriesScreenPropTypes) {
 
   useEffect(() => {
     dispatch(loadStoriesFromBackendStart(route.params.board));
+  }, []);
+
+  useEffect(() => {
+    const ws = new WebSocket("ws://" + route.params.board.url + "/websocket");
+
+    ws.onmessage = ({ data }) => {
+      const jsonData = JSON.parse(data);
+
+      switch (jsonData.object_type) {
+        case "story":
+          switch (jsonData.action) {
+            case "added":
+              dispatch(addStory(jsonData.object));
+              break;
+            case "deleted":
+              dispatch(deleteStory(jsonData.object));
+              break;
+            case "updated":
+              dispatch(updateStory(jsonData.object));
+          }
+          break;
+        case "task":
+          break;
+      }
+    };
+    return () => ws.close();
   }, []);
 
   const reloadStories = () => {

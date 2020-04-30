@@ -6,15 +6,15 @@ import {
 } from "./slice";
 import Board from "../../models/Board";
 
-interface loadStoriesFromBackendWorkerProps {
+interface boardProps {
   payload: Board;
 }
 
-function* loadStoriesFromBackendWorker({
-  payload,
-}: loadStoriesFromBackendWorkerProps) {
+function* loadStoriesFromBackendWorker({ payload }: boardProps) {
   try {
-    const response = yield fetch(payload.url).then((res) => res.json());
+    const response = yield fetch(
+      "http://" + payload.url + "/api/stories/"
+    ).then((res) => res.json());
     if (response) {
       yield put(updateStories(response.stories));
     }

@@ -1,4 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
+import Story from "../../models/Story";
+
+interface StoryPayload {
+  payload: Story;
+}
 
 const storiesSlice = createSlice({
   name: "stories",
@@ -24,6 +29,22 @@ const storiesSlice = createSlice({
       stories: null,
       error: payload,
     }),
+    addStory: (state: any, { payload }: StoryPayload) => ({
+      ...state,
+      stories: [...state.stories, payload],
+    }),
+    deleteStory: (state: any, { payload }: StoryPayload) => {
+      const newStories = state.stories.filter(
+        (story: Story) => story.id !== payload.id
+      );
+      return { ...state, stories: newStories };
+    },
+    updateStory: (state: any, { payload }: StoryPayload) => {
+      const newStories = state.stories.map((story: Story) =>
+        story.id === payload.id ? payload : story
+      );
+      return { ...state, stories: newStories };
+    },
   },
 });
 
@@ -31,6 +52,9 @@ export const {
   loadStoriesFromBackendStart,
   updateStories,
   loadStoriesError,
+  addStory,
+  deleteStory,
+  updateStory,
 } = storiesSlice.actions;
 
 export default storiesSlice.reducer;

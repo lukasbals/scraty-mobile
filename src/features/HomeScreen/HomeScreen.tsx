@@ -64,7 +64,7 @@ const HomeScreen = ({ navigation }: PropTypes) => {
         addFunc={() =>
           addBoard({
             title: "New board",
-            url: "http://192.168.178.24:8080/api/stories/",
+            url: "192.168.178.24:8080",
             id: new Date().getMilliseconds(),
           })
         }
