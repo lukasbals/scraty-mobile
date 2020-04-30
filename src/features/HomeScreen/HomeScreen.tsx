@@ -1,11 +1,7 @@
 import React, { useEffect } from "react";
 import { View, Alert, AsyncStorage } from "react-native";
 import styles from "./styles";
-import {
-  loadBoardsFromStorageStart,
-  addBoardStart,
-  removeBoardStart,
-} from "./slice";
+import { loadBoardsFromStorageStart, removeBoardStart } from "./slice";
 import { useDispatch, useSelector } from "react-redux";
 import { getBoards, getLoading } from "./seletor";
 import CustomListView from "../../shared/ListView";
@@ -40,10 +36,6 @@ const HomeScreen = ({ navigation }: PropTypes) => {
     checkIfBoardIsSelected();
   }, []);
 
-  const addBoard = (board: Board) => {
-    dispatch(addBoardStart(board));
-  };
-
   const removeBoard = (id: number) => {
     dispatch(removeBoardStart(id));
   };
@@ -61,13 +53,7 @@ const HomeScreen = ({ navigation }: PropTypes) => {
             board: board,
           });
         }}
-        addFunc={() =>
-          addBoard({
-            title: "New board",
-            url: "192.168.178.24:8080",
-            id: new Date().getMilliseconds(),
-          })
-        }
+        addFunc={() => navigation.push("AddBoard")}
         editFunc={(id: number) => Alert.alert("Edit pressed on item: " + id)}
         deleteFunc={(id: number) => removeBoard(id)}
         emptyText="There are no boards yet"
