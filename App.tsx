@@ -1,6 +1,9 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
+import {
+  createStackNavigator,
+  CardStyleInterpolators,
+} from "@react-navigation/stack";
 import HomeScreen from "./src/features/HomeScreen";
 import { Provider } from "react-redux";
 import store from "./src/store";
@@ -13,7 +16,11 @@ const App = () => {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator
+          screenOptions={{
+            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+          }}
+        >
           <Stack.Screen name="Scraty" component={HomeScreen} />
           <Stack.Screen
             name="Stories"
