@@ -27,17 +27,16 @@ function intToRGB(i: number) {
 interface PropTypes {
   task: Task;
 }
-const TaskView = ({ task }: PropTypes) => {
-  const pColor = "#" + intToRGB(hashCode(task.person));
+const TaskView = ({ task}: PropTypes) => {
+  const pColor = "#" + intToRGB(hashCode(task.user));
 
   return (
     <SafeAreaView style={styles.area}>
       <View style={styles.rowView}>
         <View style={styles.columnView}>
-          <Text style={styles.taskTitle}>{task.title}</Text>
-          <Text style={styles.taskDesc}>{task.description}</Text>
+          <Text style={styles.taskDesc}>{task.text}</Text>
           <Text style={[styles.taskPerson, { color: pColor }]}>
-            {task.person}
+            {task.user}
           </Text>
         </View>
         <View style={styles.columnView}>

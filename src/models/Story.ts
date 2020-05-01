@@ -1,7 +1,9 @@
+import Task from "./Task";
+
 interface Story {
   id: string;
   text: string;
-  // TODO: Add other fields for the story
+  tasks: Array<Task>
 }
 
 export default Story;
