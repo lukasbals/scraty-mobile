@@ -1,7 +1,8 @@
 /* eslint react/prop-types: 0 */
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Dimensions } from "react-native";
-import { TabView } from "react-native-tab-view";
+import { TabView, TabBar } from "react-native-tab-view";
+import styles from "./styles";
 import Story from "../../models/Story";
 import Status from "../../models/Status";
 import Task from "../../models/Task";
@@ -99,10 +100,20 @@ function TaskScreen({ route }: PropTypes) {
     }
   };
 
+  const renderTabBar = (props: any) => (
+    <TabBar
+      {...props}
+      indicatorStyle={styles.tabBarIndicator}
+      labelStyle={styles.tabBarLabel}
+      style={styles.tabBar}
+    />
+  );
+
   return (
     <TabView
       navigationState={{ index, routes }}
       renderScene={renderScene}
+      renderTabBar={renderTabBar}
       onIndexChange={setIndex}
       initialLayout={initialLayout}
     />
