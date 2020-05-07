@@ -3,31 +3,29 @@ import { StyleSheet } from "react-native";
 export default StyleSheet.create({
   item: {
     marginBottom: 8,
-    backgroundColor: "dodgerblue",
-  },
-
-  boardItem: {
-    marginHorizontal: 10,
+    backgroundColor: "#60656F",
     justifyContent: "space-between",
     flexDirection: "row",
-    paddingBottom: 5,
+    paddingHorizontal: 20,
+    paddingVertical: 30,
+    height: 100,
   },
 
   text: {
     fontSize: 32,
-    marginHorizontal: 10,
-    alignSelf: "center",
-    justifyContent: "center",
     color: "white",
   },
 
-  buttons: {
-    flexDirection: "row",
+  button: {
+    height: 100,
+    width: 75,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
 
-  button: {
-    fontSize: 32,
-    paddingHorizontal: 5,
-    color: "rgba(0, 0, 0, 0.5)",
+  buttonIcon: {
+    fontSize: 20,
+    color: "white",
   },
 });

@@ -12,7 +12,7 @@ export default StyleSheet.create({
     marginBottom: 40,
     marginHorizontal: 30,
     height: "auto",
-    borderColor: "dodgerblue",
+    borderColor: "#279AF1",
     borderWidth: 2,
     padding: 10,
   },

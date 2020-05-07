@@ -2,8 +2,9 @@ import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import styles from "./styles";
 import { AntDesign } from "@expo/vector-icons";
-import { SafeAreaView } from "react-native-safe-area-context";
 import CommonFields from "../../models/CommonFields";
+import Swipeable from "react-native-swipeable";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 interface PropTypes {
   common: CommonFields;
@@ -31,26 +32,36 @@ const ListItem = ({ common, onClickFunc, editFunc, deleteFunc }: PropTypes) => {
     }
   };
 
-  return (
-    <SafeAreaView style={styles.item}>
-      <TouchableOpacity onPress={handleOnClick}>
-        <View style={styles.boardItem}>
-          <Text style={styles.text}>{common.title}</Text>
-          <View style={styles.buttons}>
-            {editFunc != null && (
-              <TouchableOpacity onPress={handleEdit}>
-                <AntDesign name="edit" style={styles.button} />
-              </TouchableOpacity>
-            )}
-            {deleteFunc != null && (
-              <TouchableOpacity onPress={handleDelete}>
-                <AntDesign name="delete" style={styles.button} />
-              </TouchableOpacity>
-            )}
-          </View>
+  const buttons = [];
+
+  if (editFunc) {
+    buttons.push(
+      <TouchableOpacity key="edit" onPress={handleEdit}>
+        <View style={{ ...styles.button, backgroundColor: "#279AF1" }}>
+          <AntDesign name="edit" style={styles.buttonIcon} />
         </View>
       </TouchableOpacity>
-    </SafeAreaView>
+    );
+  }
+
+  if (deleteFunc) {
+    buttons.push(
+      <TouchableOpacity key="delete" onPress={handleDelete}>
+        <View style={{ ...styles.button, backgroundColor: "#FF595E" }}>
+          <AntDesign name="delete" style={styles.buttonIcon} />
+        </View>
+      </TouchableOpacity>
+    );
+  }
+
+  return (
+    <Swipeable rightButtons={buttons.length > 0 ? buttons : null}>
+      <View style={styles.item}>
+        <TouchableWithoutFeedback onPress={handleOnClick}>
+          <Text style={styles.text}>{common.title}</Text>
+        </TouchableWithoutFeedback>
+      </View>
+    </Swipeable>
   );
 };
 

@@ -51,7 +51,7 @@ const CustomListView = (props: PropTypes) => {
 
       {props.addFunc != null && (
         <TouchableOpacity style={styles.addButton} onPress={handleAdd}>
-          <AntDesign name="pluscircle" size={45} color="orange" />
+          <AntDesign name="pluscircle" size={45} color="#0CCE6B" />
         </TouchableOpacity>
       )}
     </SafeAreaView>
