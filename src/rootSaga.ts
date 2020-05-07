@@ -3,6 +3,7 @@ import {
   loadBoardsFromStorageWatcher,
   addBoardWatcher,
   removeBoardWatcher,
+  updateBoardWatcher,
 } from "./features/HomeScreen/saga";
 import { loadStoriesFromBackendWatcher } from "./features/StoriesScreen/saga";
 
@@ -16,6 +17,9 @@ function* scratySaga() {
 
     // Remove a board
     removeBoardWatcher(),
+
+    // Update a board
+    updateBoardWatcher(),
 
     // Load stories from backend
     loadStoriesFromBackendWatcher(),

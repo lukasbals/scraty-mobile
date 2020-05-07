@@ -17,6 +17,8 @@ const boardsSlice = createSlice({
       loading: false,
       boards: payload,
     }),
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    updateBoardStart: (state, { payload }) => ({ ...state, loading: true }),
   },
 });
 
@@ -25,6 +27,7 @@ export const {
   addBoardStart,
   removeBoardStart,
   updateBoards,
+  updateBoardStart,
 } = boardsSlice.actions;
 
 export default boardsSlice.reducer;
