@@ -63,6 +63,15 @@ function StoriesScreen({ route, navigation }: StoriesScreenPropTypes) {
     dispatch(loadStoriesFromBackendStart(route.params.board));
   };
 
+  const deleteStoryFromList = (id: string) => {
+    console.log("Delete: ", id);
+    fetch(`http://${route.params.board.url}/api/stories/${id}/`, {
+      method: "DELETE",
+    }).catch((error) => {
+      console.info("Some error occured while deleting a story", error);
+    });
+  };
+
   if (error)
     return (
       <ErrorScreen
@@ -89,7 +98,7 @@ function StoriesScreen({ route, navigation }: StoriesScreenPropTypes) {
       }
       addFunc={() => navigation.push("AddStory", { board: route.params.board })}
       editFunc={null}
-      deleteFunc={null}
+      deleteFunc={(id: string) => deleteStoryFromList(id)}
       emptyText="There are no stories yet"
     />
   );
