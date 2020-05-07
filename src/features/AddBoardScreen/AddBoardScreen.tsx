@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { TextInput, Text, Button, ActivityIndicator } from "react-native";
+import { Button, ActivityIndicator } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import styles from "./styles";
 import { useDispatch } from "react-redux";
 import { addBoardStart } from "../HomeScreen/slice";
 import { StackNavigationProp } from "@react-navigation/stack";
+import FormItem from "../../shared/FormItem";
 
 interface PropTypes {
   navigation: StackNavigationProp<any, any>;
@@ -77,26 +77,23 @@ function AddBoardScreen({ navigation }: PropTypes) {
 
   return (
     <SafeAreaView>
-      <Text style={styles.text}>Display Name</Text>
-      <TextInput
-        value={name}
-        style={styles.input}
-        placeholder="Board name"
+      <FormItem
+        label="Display name"
         onChange={onNameChange}
+        placeholder="Enter board name"
+        value={name}
       />
-      <Text style={styles.text}>URL</Text>
-      <TextInput
-        value={url}
-        style={styles.input}
-        placeholder="wwww.board.com"
+      <FormItem
+        label="URL"
         onChange={onUrlChange}
+        placeholder="wwww.board.com"
+        value={url}
       />
-      <Text style={styles.text}>Port</Text>
-      <TextInput
-        value={port}
-        style={styles.input}
-        placeholder="8080"
+      <FormItem
+        label="Port"
         onChange={onPortChange}
+        placeholder="8080"
+        value={port}
       />
       <Button onPress={saveBoard} title="Save" disabled={!valid} />
       {validating && <ActivityIndicator size="small" color="#0000ff" />}

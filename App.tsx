@@ -10,6 +10,7 @@ import store from "./src/store";
 import StoriesScreen from "./src/features/StoriesScreen";
 import TaskScreen from "./src/features/TaskScreen";
 import AddBoardScreen from "./src/features/AddBoardScreen";
+import AddStoryScreen from "./src/features/AddStoryScreen";
 
 const Stack = createStackNavigator();
 
@@ -41,6 +42,11 @@ const App = () => {
             name="AddBoard"
             component={AddBoardScreen}
             options={{ title: "Add board" }}
+          />
+          <Stack.Screen
+            name="AddStory"
+            component={AddStoryScreen}
+            options={{ title: "Add story" }}
           />
         </Stack.Navigator>
       </NavigationContainer>
