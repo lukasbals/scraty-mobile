@@ -64,10 +64,12 @@ function StoriesScreen({ route, navigation }: StoriesScreenPropTypes) {
   };
 
   const deleteStoryFromList = (id: string) => {
-    console.log("Delete: ", id);
-    fetch(`http://${route.params.board.url}/api/stories/${id}/`, {
-      method: "DELETE",
-    }).catch((error) => {
+    fetch(
+      `${route.params.board.protocol}//${route.params.board.url}/api/stories/${id}/`,
+      {
+        method: "DELETE",
+      }
+    ).catch((error) => {
       console.info("Some error occured while deleting a story", error);
     });
   };

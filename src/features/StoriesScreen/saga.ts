@@ -13,7 +13,7 @@ interface boardProps {
 function* loadStoriesFromBackendWorker({ payload }: boardProps) {
   try {
     const response = yield fetch(
-      "http://" + payload.url + "/api/stories/"
+      `${payload.protocol}//${payload.url}/api/stories/`
     ).then((res) => res.json());
     if (response) {
       yield put(updateStories(response.stories));

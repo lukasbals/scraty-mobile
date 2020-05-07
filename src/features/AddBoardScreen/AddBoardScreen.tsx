@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { addBoardStart } from "../HomeScreen/slice";
 import { StackNavigationProp } from "@react-navigation/stack";
 import FormItem from "../../shared/FormItem";
+import Url from "url-parse";
 
 interface PropTypes {
   navigation: StackNavigationProp<any, any>;
@@ -22,7 +23,8 @@ function AddBoardScreen({ navigation }: PropTypes) {
   const validate = (n: string, u: string, p: string) => {
     if (n !== "" && u !== "" && p !== "") {
       setValidating(true);
-      fetch(`http://${u}:${p}/api/stories/`)
+      const urlObject = new Url(u);
+      fetch(`${urlObject.protocol}//${urlObject.hostname}:${p}/api/stories/`)
         .then((res) => {
           if (res.status === 200) {
             setValid(true);
@@ -64,10 +66,12 @@ function AddBoardScreen({ navigation }: PropTypes) {
   };
 
   const saveBoard = () => {
+    const urlObject = new Url(url);
     dispatch(
       addBoardStart({
         title: name,
-        url: `${url}:${port}`,
+        url: `${urlObject.hostname}:${port}`,
+        protocol: urlObject.protocol,
         id: new Date().getMilliseconds(),
       })
     );

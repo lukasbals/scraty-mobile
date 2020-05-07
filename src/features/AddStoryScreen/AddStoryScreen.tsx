@@ -46,16 +46,19 @@ function AddStoryScreen({ navigation, route }: PropTypes) {
 
   const saveStory = (): void => {
     setSaving(true);
-    fetch(`http://${route.params.board.url}/api/stories/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        text: title,
-        link: link,
-      }),
-    })
+    fetch(
+      `${route.params.board.protocol}//${route.params.board.url}/api/stories/`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          text: title,
+          link: link,
+        }),
+      }
+    )
       .then((res) => {
         if (res.status === 200) {
           navigation.goBack();
