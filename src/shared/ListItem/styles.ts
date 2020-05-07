@@ -28,5 +28,6 @@ export default StyleSheet.create({
   button: {
     fontSize: 32,
     paddingHorizontal: 5,
+    color: "rgba(0, 0, 0, 0.5)",
   },
 });

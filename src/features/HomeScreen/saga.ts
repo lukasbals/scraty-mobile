@@ -37,6 +37,17 @@ function* removeBoardWorker({ payload }: any) {
     const value = yield call(AsyncStorage.getItem, "boards");
     const boards: Board[] = value !== null ? JSON.parse(value) : [];
 
+    const selectedBoardValue = yield call(
+      AsyncStorage.getItem,
+      "selectedBoard"
+    );
+    const selecteBoard: Board =
+      selectedBoardValue !== null ? JSON.parse(selectedBoardValue) : null;
+
+    if (selecteBoard && selecteBoard.id === payload) {
+      yield call(AsyncStorage.removeItem, "selectedBoard");
+    }
+
     const newBoards = boards.filter((board: Board) => board.id !== payload);
 
     yield call(AsyncStorage.setItem, "boards", JSON.stringify(newBoards));
