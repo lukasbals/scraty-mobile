@@ -95,6 +95,7 @@ function StoriesScreen({ route, navigation }: StoriesScreenPropTypes) {
       items={displayedStories}
       itemClickFunc={(id: string) =>
         navigation.push("Tasks", {
+          board: route.params.board,
           story: stories.find((story: Story) => story.id === id),
         })
       }
