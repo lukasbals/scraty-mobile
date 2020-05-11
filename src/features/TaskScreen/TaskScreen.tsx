@@ -7,9 +7,22 @@ import Story from "../../models/Story";
 import Status from "../../models/Status";
 import Task from "../../models/Task";
 import TaskListView from "../../shared/TaskListView/TaskListView";
+import Board from "../../models/Board";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { useDispatch, useSelector } from "react-redux";
+import { addTask, deleteTask, updateTask, setTasks } from "./slice";
+import { getTasks } from "./selector";
+import LoadingScreen from "../../shared/LoadingScreen";
 
-interface Props {
-  tasks: Array<Task>;
+export interface TaskScreenPropTypes {
+  navigation: StackNavigationProp<any, any>;
+  route: {
+    params: {
+      board: Board;
+      story: Story;
+      taskState: Status;
+    };
+  };
 }
 
 interface Scene {
@@ -18,81 +31,84 @@ interface Scene {
   };
 }
 
-const routes = [
-  { key: "ToDo", title: "ToDo" },
-  { key: "InProgress", title: "In Progress" },
-  { key: "Verify", title: "Verify" },
-  { key: "Done", title: "Done" },
-];
-
-const ToDoRoute = ({ tasks }: Props) => (
-  <TaskListView
-    tasks={tasks}
-    addFunc={() => alert("add task button pressed")}
-  />
-);
-
-const InProgressRoute = ({ tasks }: Props) => (
-  <TaskListView tasks={tasks} addFunc={null} />
-);
-
-const VerifyRoute = ({ tasks }: Props) => (
-  <TaskListView tasks={tasks} addFunc={null} />
-);
-
-const DoneRoute = ({ tasks }: Props) => (
-  <TaskListView tasks={tasks} addFunc={null} />
-);
-
 const initialLayout = { width: Dimensions.get("window").width };
 
-interface PropTypes {
-  route: {
-    params: {
-      story: Story;
-    };
-  };
-}
+const routes = [
+  { key: Status.ToDo.toString(), title: "ToDo" },
+  { key: Status.InProgress.toString(), title: "In Progress" },
+  { key: Status.Verify.toString(), title: "Verify" },
+  { key: Status.Done.toString(), title: "Done" },
+];
 
-function TaskScreen({ route }: PropTypes) {
+function TaskScreen({ route, navigation }: TaskScreenPropTypes) {
+  const dispatch = useDispatch();
   const [index, setIndex] = useState(0);
+  const tasks = useSelector(getTasks);
 
   useEffect(() => {
-    console.log(route.params.story);
+    dispatch(setTasks(route.params.story.tasks));
   }, []);
+
+  useEffect(() => {
+    const ws = new WebSocket("ws://" + route.params.board.url + "/websocket");
+
+    ws.onmessage = ({ data }) => {
+      const jsonData = JSON.parse(data);
+
+      switch (jsonData.object_type) {
+        case "story":
+          break;
+        case "task":
+          console.log(jsonData.object);
+          switch (jsonData.action) {
+            case "added":
+              dispatch(addTask(jsonData.object));
+              break;
+            case "deleted":
+              dispatch(deleteTask(jsonData.object));
+              break;
+            case "updated":
+              dispatch(updateTask(jsonData.object));
+          }
+          break;
+      }
+    };
+    return () => ws.close();
+  }, []);
+
+  const addTaskFunc = () => {
+    navigation.push("AddTask", {
+      board: route.params.board,
+      story: route.params.story,
+      taskState: index,
+    });
+  };
 
   const renderScene = (scene: Scene) => {
     switch (scene.route.key) {
-      case "ToDo":
+      case Status.ToDo.toString():
+        return <TaskListView tasks={tasks} addFunc={addTaskFunc} />;
+      case Status.InProgress.toString():
         return (
-          <ToDoRoute
-            tasks={route.params.story.tasks.filter(
-              (task: Task) => task.state === Status.ToDo
-            )}
-          />
-        );
-      case "InProgress":
-        return (
-          <InProgressRoute
-            tasks={route.params.story.tasks.filter(
+          <TaskListView
+            tasks={tasks.filter(
               (task: Task) => task.state === Status.InProgress
             )}
+            addFunc={addTaskFunc}
           />
         );
-      case "Verify":
+      case Status.Verify.toString():
         return (
-          <VerifyRoute
-            tasks={route.params.story.tasks.filter(
-              (task: Task) => task.state === Status.Verify
-            )}
+          <TaskListView
+            tasks={tasks.filter((task: Task) => task.state === Status.Verify)}
+            addFunc={addTaskFunc}
           />
         );
-      case "Done":
+      case Status.Done.toString():
         return (
-          <DoneRoute
-            tasks={route.params.story.tasks.filter(
-              (task: Task) => task.state === Status.Done
-            )}
+          <TaskListView
+            tasks={tasks.filter((task: Task) => task.state === Status.Done)}
+            addFunc={addTaskFunc}
           />
         );
       default:
@@ -108,6 +124,8 @@ function TaskScreen({ route }: PropTypes) {
       style={styles.tabBar}
     />
   );
+
+  if (!tasks) return <LoadingScreen />;
 
   return (
     <TabView
