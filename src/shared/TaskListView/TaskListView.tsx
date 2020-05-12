@@ -2,18 +2,29 @@ import React from "react";
 import { SafeAreaView, FlatList, TouchableOpacity } from "react-native";
 import styles from "../ListView/styles";
 import { AntDesign } from "@expo/vector-icons";
-import TaskView from "../../features/TaskScreen/TaskView";
+import TaskView from "./TaskView";
 import Task from "../../models/Task";
 
 interface PropTypes {
   tasks: Task[];
   addFunc: Function | null;
+  editFunc: Function | null;
+  deleteFunc: Function | null;
+  rightFunc: Function | null;
+  leftFunc: Function | null;
 }
 
-const TaskListView = (props: PropTypes) => {
+const TaskListView = ({
+  tasks,
+  addFunc,
+  editFunc,
+  deleteFunc,
+  rightFunc,
+  leftFunc,
+}: PropTypes) => {
   const handleAdd = () => {
-    if (typeof props.addFunc === "function") {
-      props.addFunc();
+    if (typeof addFunc === "function") {
+      addFunc();
     }
   };
 
@@ -21,13 +32,21 @@ const TaskListView = (props: PropTypes) => {
     <SafeAreaView style={styles.container}>
       <FlatList
         style={styles.container}
-        data={props.tasks}
-        renderItem={({ item }) => <TaskView task={item} />}
+        data={tasks}
+        renderItem={({ item }) => (
+          <TaskView
+            task={item}
+            editFunc={editFunc}
+            deleteFunc={deleteFunc}
+            rightFunc={rightFunc}
+            leftFunc={leftFunc}
+          />
+        )}
         keyExtractor={(item) => item.id.toString()}
       />
-      {props.addFunc != null && (
+      {addFunc != null && (
         <TouchableOpacity style={styles.addButton} onPress={handleAdd}>
-          <AntDesign name="pluscircle" size={45} color="orange" />
+          <AntDesign name="pluscircle" size={45} color="#0CCE6B" />
         </TouchableOpacity>
       )}
     </SafeAreaView>

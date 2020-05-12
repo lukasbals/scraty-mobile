@@ -1,10 +1,10 @@
 import CommonFields from "./CommonFields";
-import Status from "./Status";
+import State from "./State";
 
 interface Task extends CommonFields {
   text: string;
   user: string;
-  state: Status;
+  state: State;
 }
 
 export default Task;

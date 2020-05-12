@@ -4,7 +4,7 @@ import { Dimensions } from "react-native";
 import { TabView, TabBar } from "react-native-tab-view";
 import styles from "./styles";
 import Story from "../../models/Story";
-import Status from "../../models/Status";
+import State from "../../models/State";
 import Task from "../../models/Task";
 import TaskListView from "../../shared/TaskListView/TaskListView";
 import Board from "../../models/Board";
@@ -21,7 +21,7 @@ export interface TaskScreenPropTypes {
     params: {
       board: Board;
       story: Story;
-      taskState: Status;
+      taskState: State;
     };
   };
 }
@@ -35,10 +35,10 @@ interface Scene {
 const initialLayout = { width: Dimensions.get("window").width };
 
 const routes = [
-  { key: Status.ToDo.toString(), title: "ToDo" },
-  { key: Status.InProgress.toString(), title: "In Progress" },
-  { key: Status.Verify.toString(), title: "Verify" },
-  { key: Status.Done.toString(), title: "Done" },
+  { key: State.ToDo.toString(), title: "ToDo" },
+  { key: State.InProgress.toString(), title: "In Progress" },
+  { key: State.Verify.toString(), title: "Verify" },
+  { key: State.Done.toString(), title: "Done" },
 ];
 
 function TaskScreen({ route, navigation }: TaskScreenPropTypes) {
@@ -92,29 +92,50 @@ function TaskScreen({ route, navigation }: TaskScreenPropTypes) {
 
   const renderScene = (scene: Scene) => {
     switch (scene.route.key) {
-      case Status.ToDo.toString():
-        return <TaskListView tasks={tasks} addFunc={addTaskFunc} />;
-      case Status.InProgress.toString():
+      case State.ToDo.toString():
+        return (
+          <TaskListView
+            tasks={tasks.filter((task: Task) => task.state === State.ToDo)}
+            addFunc={addTaskFunc}
+            editFunc={() => alert("pressed edit button")}
+            deleteFunc={() => alert("pressed delete button")}
+            rightFunc={() => alert("pressed right button")}
+            leftFunc={() => alert("pressed left button")}
+          />
+        );
+      case State.InProgress.toString():
         return (
           <TaskListView
             tasks={tasks.filter(
-              (task: Task) => task.state === Status.InProgress
+              (task: Task) => task.state === State.InProgress
             )}
-            addFunc={addTaskFunc}
+            addFunc={null}
+            editFunc={() => alert("pressed edit button")}
+            deleteFunc={() => alert("pressed delete button")}
+            rightFunc={() => alert("pressed right button")}
+            leftFunc={() => alert("pressed left button")}
           />
         );
-      case Status.Verify.toString():
+      case State.Verify.toString():
         return (
           <TaskListView
-            tasks={tasks.filter((task: Task) => task.state === Status.Verify)}
-            addFunc={addTaskFunc}
+            tasks={tasks.filter((task: Task) => task.state === State.Verify)}
+            addFunc={null}
+            editFunc={() => alert("pressed edit button")}
+            deleteFunc={() => alert("pressed delete button")}
+            rightFunc={() => alert("pressed right button")}
+            leftFunc={() => alert("pressed left button")}
           />
         );
-      case Status.Done.toString():
+      case State.Done.toString():
         return (
           <TaskListView
-            tasks={tasks.filter((task: Task) => task.state === Status.Done)}
-            addFunc={addTaskFunc}
+            tasks={tasks.filter((task: Task) => task.state === State.Done)}
+            addFunc={null}
+            editFunc={() => alert("pressed edit button")}
+            deleteFunc={() => alert("pressed delete button")}
+            rightFunc={() => alert("pressed right button")}
+            leftFunc={() => alert("pressed left button")}
           />
         );
       default:
