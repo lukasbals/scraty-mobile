@@ -2,19 +2,32 @@ import React, { useState } from "react";
 import { Button, ActivityIndicator } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch } from "react-redux";
-import { addBoardStart } from "../HomeScreen/slice";
+import { addBoardStart, updateBoardStart } from "../HomeScreen/slice";
 import { StackNavigationProp } from "@react-navigation/stack";
 import FormItem from "../../shared/FormItem";
 import Url from "url-parse";
+import Board from "../../models/Board";
 
 interface PropTypes {
   navigation: StackNavigationProp<any, any>;
+  route: {
+    params: {
+      board: Board;
+      title: string;
+    };
+  };
 }
 
-function AddBoardScreen({ navigation }: PropTypes) {
-  const [name, setName] = useState("");
-  const [url, setUrl] = useState("");
-  const [port, setPort] = useState("");
+const getUrl = (board: Board): string => {
+  return `${board.protocol}//${board.host}`;
+};
+
+function AddEditBoardScreen({ route, navigation }: PropTypes) {
+  const [isEdit] = useState(!!route.params.board);
+
+  const [name, setName] = useState(isEdit ? route.params.board.title : "");
+  const [url, setUrl] = useState(isEdit ? getUrl(route.params.board) : "");
+  const [port, setPort] = useState(isEdit ? route.params.board.port : "");
   const [valid, setValid] = useState(false);
   const [validating, setValidating] = useState(false);
 
@@ -67,14 +80,27 @@ function AddBoardScreen({ navigation }: PropTypes) {
 
   const saveBoard = () => {
     const urlObject = new Url(url);
-    dispatch(
-      addBoardStart({
-        title: name,
-        url: `${urlObject.hostname}:${port}`,
-        protocol: urlObject.protocol,
-        id: new Date().getMilliseconds(),
-      })
-    );
+    if (isEdit) {
+      dispatch(
+        updateBoardStart({
+          title: name,
+          host: urlObject.hostname,
+          port: port,
+          protocol: urlObject.protocol,
+          id: route.params.board.id,
+        })
+      );
+    } else {
+      dispatch(
+        addBoardStart({
+          title: name,
+          host: urlObject.hostname,
+          port: port,
+          protocol: urlObject.protocol,
+          id: new Date().getMilliseconds(),
+        })
+      );
+    }
     resetForm();
     navigation.goBack();
   };
@@ -90,7 +116,7 @@ function AddBoardScreen({ navigation }: PropTypes) {
       <FormItem
         label="URL"
         onChange={onUrlChange}
-        placeholder="wwww.board.com"
+        placeholder="http://wwww.board.com"
         value={url}
       />
       <FormItem
@@ -105,4 +131,4 @@ function AddBoardScreen({ navigation }: PropTypes) {
   );
 }
 
-export default AddBoardScreen;
+export default AddEditBoardScreen;

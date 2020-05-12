@@ -35,7 +35,9 @@ function StoriesScreen({ route, navigation }: StoriesScreenPropTypes) {
   }, []);
 
   useEffect(() => {
-    const ws = new WebSocket("ws://" + route.params.board.url + "/websocket");
+    const ws = new WebSocket(
+      `ws://${route.params.board.host}:${route.params.board.port}/websocket`
+    );
 
     ws.onmessage = ({ data }) => {
       const jsonData = JSON.parse(data);
@@ -66,7 +68,7 @@ function StoriesScreen({ route, navigation }: StoriesScreenPropTypes) {
 
   const deleteStoryFromList = (id: string) => {
     fetch(
-      `${route.params.board.protocol}//${route.params.board.url}/api/stories/${id}/`,
+      `${route.params.board.protocol}//${route.params.board.host}:${route.params.board.port}/api/stories/${id}/`,
       {
         method: "DELETE",
       }
