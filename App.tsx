@@ -9,7 +9,7 @@ import { Provider } from "react-redux";
 import store from "./src/store";
 import StoriesScreen from "./src/features/StoriesScreen";
 import TaskScreen from "./src/features/TaskScreen";
-import AddBoardScreen from "./src/features/AddBoardScreen";
+import AddEditBoardScreen from "./src/features/AddEditBoardScreen";
 import AddStoryScreen from "./src/features/AddStoryScreen";
 import AddTaskScreen from "./src/features/AddTaskScreen";
 
@@ -40,9 +40,11 @@ const App = () => {
             })}
           />
           <Stack.Screen
-            name="AddBoard"
-            component={AddBoardScreen}
-            options={{ title: "Add board" }}
+            name="AddEditBoard"
+            component={AddEditBoardScreen}
+            options={({ route }: any) => ({
+              title: route.params.screenTitle,
+            })}
           />
           <Stack.Screen
             name="AddStory"

@@ -55,7 +55,9 @@ function TaskScreen({ route, navigation }: TaskScreenPropTypes) {
   }, [stories]);
 
   useEffect(() => {
-    const ws = new WebSocket("ws://" + route.params.board.url + "/websocket");
+    const ws = new WebSocket(
+      `ws://${route.params.board.host}:${route.params.board.port}/websocket`
+    );
 
     ws.onmessage = ({ data }) => {
       const jsonData = JSON.parse(data);

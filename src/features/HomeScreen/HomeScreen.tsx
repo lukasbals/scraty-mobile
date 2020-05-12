@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, Alert, AsyncStorage } from "react-native";
+import { View, AsyncStorage } from "react-native";
 import styles from "./styles";
 import { loadBoardsFromStorageStart, removeBoardStart } from "./slice";
 import { useDispatch, useSelector } from "react-redux";
@@ -53,8 +53,15 @@ const HomeScreen = ({ navigation }: PropTypes) => {
             board: board,
           });
         }}
-        addFunc={() => navigation.push("AddBoard")}
-        editFunc={(id: number) => Alert.alert("Edit pressed on item: " + id)}
+        addFunc={() =>
+          navigation.push("AddEditBoard", { screenTitle: "Add board" })
+        }
+        editFunc={(id: number) =>
+          navigation.push("AddEditBoard", {
+            board: boards.find((board: Board) => board.id === id),
+            screenTitle: "Edit board",
+          })
+        }
         deleteFunc={(id: number) => removeBoard(id)}
         emptyText="There are no boards yet"
       />
