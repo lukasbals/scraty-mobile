@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import FormItem from "../../shared/FormItem";
 import { TaskScreenPropTypes } from "../TaskScreen/TaskScreen";
-import Status from "../../models/Status";
+import State from "../../models/State";
 import styles from "../../shared/FormItem/styles";
 
 function AddTaskScreen({ navigation, route }: TaskScreenPropTypes) {
@@ -18,7 +18,7 @@ function AddTaskScreen({ navigation, route }: TaskScreenPropTypes) {
   const [user, setUser] = useState("");
   const [taskState, setTaskState] = useState(route.params.taskState);
   const [taskStateName, setTaskStateName] = useState(
-    Status[route.params.taskState]
+    State[route.params.taskState]
   );
   const [valid, setValid] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -49,7 +49,7 @@ function AddTaskScreen({ navigation, route }: TaskScreenPropTypes) {
   const saveTask = (): void => {
     setSaving(true);
     fetch(
-      `${route.params.board.protocol}//${route.params.board.url}/api/tasks/`,
+      `${route.params.board.protocol}//${route.params.board.host}:${route.params.board.port}/api/tasks/`,
       {
         method: "POST",
         headers: {
@@ -101,8 +101,8 @@ function AddTaskScreen({ navigation, route }: TaskScreenPropTypes) {
             setTaskState(itemIndex);
           }}
         >
-          {Object.keys(Status)
-            .filter((enumKey) => typeof Status[enumKey as any] === "number")
+          {Object.keys(State)
+            .filter((enumKey) => typeof State[enumKey as any] === "number")
             .map((enumKey) => {
               return (
                 <Picker.Item
