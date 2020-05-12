@@ -5,12 +5,16 @@ import {
   removeBoardWatcher,
   updateBoardWatcher,
 } from "./features/HomeScreen/saga";
-import { loadStoriesFromBackendWatcher } from "./features/StoriesScreen/saga";
+import {
+  loadStoriesFromBackendWatcher,
+  loadStoriesFromBackendWithoutLoadingWatcher,
+} from "./features/StoriesScreen/saga";
 
 function* scratySaga() {
   yield all([
     // Fetch boards
     loadBoardsFromStorageWatcher(),
+    loadStoriesFromBackendWithoutLoadingWatcher(),
 
     // Add a new board
     addBoardWatcher(),

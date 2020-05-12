@@ -5,6 +5,7 @@ import {
   addStory,
   deleteStory,
   updateStory,
+  loadStoriesFromBackendWithoutLoadingStart,
 } from "./slice";
 import { getStories, getLoading, getError } from "./selector";
 import CustomListView from "../../shared/ListView";
@@ -93,12 +94,13 @@ function StoriesScreen({ route, navigation }: StoriesScreenPropTypes) {
   return (
     <CustomListView
       items={displayedStories}
-      itemClickFunc={(id: string) =>
+      itemClickFunc={(id: string) => {
+        dispatch(loadStoriesFromBackendWithoutLoadingStart(route.params.board));
         navigation.push("Tasks", {
           board: route.params.board,
           story: stories.find((story: Story) => story.id === id),
-        })
-      }
+        });
+      }}
       addFunc={() => navigation.push("AddStory", { board: route.params.board })}
       editFunc={null}
       deleteFunc={(id: string) => deleteStoryFromList(id)}

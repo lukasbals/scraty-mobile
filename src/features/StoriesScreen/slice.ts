@@ -19,6 +19,8 @@ const storiesSlice = createSlice({
       loading: true,
       error: null,
     }),
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    loadStoriesFromBackendWithoutLoadingStart: (state, { payload }) => state,
     updateStories: (state, { payload }) => ({
       ...state,
       loading: false,
@@ -50,6 +52,7 @@ const storiesSlice = createSlice({
 
 export const {
   loadStoriesFromBackendStart,
+  loadStoriesFromBackendWithoutLoadingStart,
   updateStories,
   loadStoriesError,
   addStory,

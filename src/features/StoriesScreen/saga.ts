@@ -3,6 +3,7 @@ import {
   updateStories,
   loadStoriesFromBackendStart,
   loadStoriesError,
+  loadStoriesFromBackendWithoutLoadingStart,
 } from "./slice";
 import Board from "../../models/Board";
 
@@ -26,4 +27,11 @@ function* loadStoriesFromBackendWorker({ payload }: boardProps) {
 
 export function* loadStoriesFromBackendWatcher() {
   yield takeEvery(loadStoriesFromBackendStart, loadStoriesFromBackendWorker);
+}
+
+export function* loadStoriesFromBackendWithoutLoadingWatcher() {
+  yield takeEvery(
+    loadStoriesFromBackendWithoutLoadingStart,
+    loadStoriesFromBackendWorker
+  );
 }

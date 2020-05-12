@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addTask, deleteTask, updateTask, setTasks } from "./slice";
 import { getTasks } from "./selector";
 import LoadingScreen from "../../shared/LoadingScreen";
+import { getStories } from "../StoriesScreen/selector";
 
 export interface TaskScreenPropTypes {
   navigation: StackNavigationProp<any, any>;
@@ -44,10 +45,14 @@ function TaskScreen({ route, navigation }: TaskScreenPropTypes) {
   const dispatch = useDispatch();
   const [index, setIndex] = useState(0);
   const tasks = useSelector(getTasks);
+  const stories = useSelector(getStories);
 
   useEffect(() => {
-    dispatch(setTasks(route.params.story.tasks));
-  }, []);
+    const newTasks = stories.find(
+      (story: Story) => story.id === route.params.story.id
+    ).tasks;
+    dispatch(setTasks(newTasks));
+  }, [stories]);
 
   useEffect(() => {
     const ws = new WebSocket("ws://" + route.params.board.url + "/websocket");
@@ -59,7 +64,6 @@ function TaskScreen({ route, navigation }: TaskScreenPropTypes) {
         case "story":
           break;
         case "task":
-          console.log(jsonData.object);
           switch (jsonData.action) {
             case "added":
               dispatch(addTask(jsonData.object));
