@@ -11,7 +11,7 @@ import StoriesScreen from "./src/features/StoriesScreen";
 import TaskScreen from "./src/features/TaskScreen";
 import AddEditBoardScreen from "./src/features/AddEditBoardScreen";
 import AddEditStoryScreen from "./src/features/AddEditStoryScreen";
-import AddTaskScreen from "./src/features/AddTaskScreen";
+import AddEditTaskScreen from "./src/features/AddEditTaskScreen";
 
 const Stack = createStackNavigator();
 
@@ -54,9 +54,11 @@ const App = () => {
             })}
           />
           <Stack.Screen
-            name="AddTask"
-            component={AddTaskScreen}
-            options={{ title: "Add task" }}
+            name="AddEditTask"
+            component={AddEditTaskScreen}
+            options={({ route }: any) => ({
+              title: route.params.screenTitle,
+            })}
           />
         </Stack.Navigator>
       </NavigationContainer>
