@@ -4,7 +4,6 @@ import styles from "./styles";
 import { AntDesign } from "@expo/vector-icons";
 import CommonFields from "../../models/CommonFields";
 import Swipeable from "react-native-swipeable";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 interface PropTypes {
   common: CommonFields;
@@ -57,9 +56,9 @@ const ListItem = ({ common, onClickFunc, editFunc, deleteFunc }: PropTypes) => {
   return (
     <Swipeable rightButtons={buttons.length > 0 ? buttons : null}>
       <View style={styles.item}>
-        <TouchableWithoutFeedback onPress={handleOnClick}>
+        <TouchableOpacity onPress={handleOnClick}>
           <Text style={styles.text}>{common.title}</Text>
-        </TouchableWithoutFeedback>
+        </TouchableOpacity>
       </View>
     </Swipeable>
   );
