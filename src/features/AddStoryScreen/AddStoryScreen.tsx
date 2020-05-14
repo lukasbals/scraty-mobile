@@ -47,7 +47,7 @@ function AddStoryScreen({ navigation, route }: PropTypes) {
   const saveStory = (): void => {
     setSaving(true);
     fetch(
-      `${route.params.board.protocol}//${route.params.board.url}/api/stories/`,
+      `${route.params.board.protocol}//${route.params.board.host}:${route.params.board.port}/api/stories/`,
       {
         method: "POST",
         headers: {
