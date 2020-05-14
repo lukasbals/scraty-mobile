@@ -10,7 +10,7 @@ import store from "./src/store";
 import StoriesScreen from "./src/features/StoriesScreen";
 import TaskScreen from "./src/features/TaskScreen";
 import AddEditBoardScreen from "./src/features/AddEditBoardScreen";
-import AddStoryScreen from "./src/features/AddStoryScreen";
+import AddEditStoryScreen from "./src/features/AddEditStoryScreen";
 import AddTaskScreen from "./src/features/AddTaskScreen";
 
 const Stack = createStackNavigator();
@@ -47,9 +47,11 @@ const App = () => {
             })}
           />
           <Stack.Screen
-            name="AddStory"
-            component={AddStoryScreen}
-            options={{ title: "Add story" }}
+            name="AddEditStory"
+            component={AddEditStoryScreen}
+            options={({ route }: any) => ({
+              title: route.params.screenTitle,
+            })}
           />
           <Stack.Screen
             name="AddTask"

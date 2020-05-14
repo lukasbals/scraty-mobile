@@ -103,8 +103,20 @@ function StoriesScreen({ route, navigation }: StoriesScreenPropTypes) {
           story: stories.find((story: Story) => story.id === id),
         });
       }}
-      addFunc={() => navigation.push("AddStory", { board: route.params.board })}
-      editFunc={null}
+      addFunc={() =>
+        navigation.push("AddEditStory", {
+          board: route.params.board,
+          story: null,
+          screenTitle: "Add Story",
+        })
+      }
+      editFunc={(id: string) =>
+        navigation.push("AddEditStory", {
+          board: route.params.board,
+          story: stories.find((story: Story) => story.id === id),
+          screenTitle: "Edit Story",
+        })
+      }
       deleteFunc={(id: string) => deleteStoryFromList(id)}
       emptyText="There are no stories yet"
     />
