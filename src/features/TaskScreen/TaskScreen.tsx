@@ -15,7 +15,7 @@ import { getTasks } from "./selector";
 import LoadingScreen from "../../shared/LoadingScreen";
 import { getStories } from "../StoriesScreen/selector";
 
-export interface TaskScreenPropTypes {
+interface TaskScreenPropTypes {
   navigation: StackNavigationProp<any, any>;
   route: {
     params: {
@@ -83,10 +83,21 @@ function TaskScreen({ route, navigation }: TaskScreenPropTypes) {
   }, []);
 
   const addTaskFunc = () => {
-    navigation.push("AddTask", {
+    navigation.push("AddEditTask", {
       board: route.params.board,
       story: route.params.story,
       taskState: index,
+      screenTitle: "Add Task",
+    });
+  };
+
+  const editTaskFunc = (id: number) => {
+    navigation.push("AddEditTask", {
+      board: route.params.board,
+      story: route.params.story,
+      task: tasks.find((task: Task) => task.id === id),
+      taskState: index,
+      screenTitle: "Edit Task",
     });
   };
 
@@ -97,7 +108,7 @@ function TaskScreen({ route, navigation }: TaskScreenPropTypes) {
           <TaskListView
             tasks={tasks.filter((task: Task) => task.state === State.ToDo)}
             addFunc={addTaskFunc}
-            editFunc={() => alert("pressed edit button")}
+            editFunc={(id: number) => editTaskFunc(id)}
             deleteFunc={() => alert("pressed delete button")}
             rightFunc={() => alert("pressed right button")}
             leftFunc={() => alert("pressed left button")}
@@ -110,7 +121,7 @@ function TaskScreen({ route, navigation }: TaskScreenPropTypes) {
               (task: Task) => task.state === State.InProgress
             )}
             addFunc={null}
-            editFunc={() => alert("pressed edit button")}
+            editFunc={(id: number) => editTaskFunc(id)}
             deleteFunc={() => alert("pressed delete button")}
             rightFunc={() => alert("pressed right button")}
             leftFunc={() => alert("pressed left button")}
@@ -121,7 +132,7 @@ function TaskScreen({ route, navigation }: TaskScreenPropTypes) {
           <TaskListView
             tasks={tasks.filter((task: Task) => task.state === State.Verify)}
             addFunc={null}
-            editFunc={() => alert("pressed edit button")}
+            editFunc={(id: number) => editTaskFunc(id)}
             deleteFunc={() => alert("pressed delete button")}
             rightFunc={() => alert("pressed right button")}
             leftFunc={() => alert("pressed left button")}
@@ -132,7 +143,7 @@ function TaskScreen({ route, navigation }: TaskScreenPropTypes) {
           <TaskListView
             tasks={tasks.filter((task: Task) => task.state === State.Done)}
             addFunc={null}
-            editFunc={() => alert("pressed edit button")}
+            editFunc={(id: number) => editTaskFunc(id)}
             deleteFunc={() => alert("pressed delete button")}
             rightFunc={() => alert("pressed right button")}
             leftFunc={() => alert("pressed left button")}

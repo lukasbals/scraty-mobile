@@ -9,16 +9,35 @@ import {
   TextInput,
 } from "react-native";
 import FormItem from "../../shared/FormItem";
-import { TaskScreenPropTypes } from "../TaskScreen/TaskScreen";
 import State from "../../models/State";
 import styles from "../../shared/FormItem/styles";
+import { StackNavigationProp } from "@react-navigation/stack";
+import Board from "../../models/Board";
+import Story from "../../models/Story";
+import Task from "../../models/Task";
 
-function AddTaskScreen({ navigation, route }: TaskScreenPropTypes) {
-  const [text, setText] = useState("");
-  const [user, setUser] = useState("");
-  const [taskState, setTaskState] = useState(route.params.taskState);
+interface PropTypes {
+  navigation: StackNavigationProp<any, any>;
+  route: {
+    params: {
+      board: Board;
+      story: Story;
+      task: Task;
+      taskState: State;
+    };
+  };
+}
+
+function AddTaskScreen({ navigation, route }: PropTypes) {
+  const [isEdit] = useState(!!route.params.task);
+
+  const [text, setText] = useState(isEdit ? route.params.task.text : "");
+  const [user, setUser] = useState(isEdit ? route.params.task.user : "");
+  const [taskState, setTaskState] = useState(
+    isEdit ? route.params.task.state : route.params.taskState
+  );
   const [taskStateName, setTaskStateName] = useState(
-    State[route.params.taskState]
+    isEdit ? State[route.params.task.state] : State[route.params.taskState]
   );
   const [valid, setValid] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -48,21 +67,22 @@ function AddTaskScreen({ navigation, route }: TaskScreenPropTypes) {
 
   const saveTask = (): void => {
     setSaving(true);
-    fetch(
-      `${route.params.board.protocol}//${route.params.board.host}:${route.params.board.port}/api/tasks/`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          text: text,
-          user: user,
-          story_id: route.params.story.id,
-          state: taskState,
-        }),
-      }
-    )
+    let url = `${route.params.board.protocol}//${route.params.board.host}:${route.params.board.port}/api/tasks/`;
+    if (isEdit) {
+      url += route.params.task.id;
+    }
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        text: text,
+        user: user,
+        story_id: route.params.story.id,
+        state: taskState,
+      }),
+    })
       .then((res) => {
         if (res.status === 200) {
           navigation.goBack();
