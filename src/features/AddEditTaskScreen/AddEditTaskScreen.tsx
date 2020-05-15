@@ -1,13 +1,6 @@
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import {
-  Button,
-  ActivityIndicator,
-  Picker,
-  Text,
-  View,
-  TextInput,
-} from "react-native";
+import { Button, ActivityIndicator, Text, TextInput } from "react-native";
 import FormItem from "../../shared/FormItem";
 import State from "../../models/State";
 import styles from "../../shared/FormItem/styles";
@@ -23,7 +16,6 @@ interface PropTypes {
       board: Board;
       story: Story;
       task: Task;
-      taskState: State;
     };
   };
 }
@@ -33,12 +25,6 @@ function AddTaskScreen({ navigation, route }: PropTypes) {
 
   const [text, setText] = useState(isEdit ? route.params.task.text : "");
   const [user, setUser] = useState(isEdit ? route.params.task.user : "");
-  const [taskState, setTaskState] = useState(
-    isEdit ? route.params.task.state : route.params.taskState
-  );
-  const [taskStateName, setTaskStateName] = useState(
-    isEdit ? State[route.params.task.state] : State[route.params.taskState]
-  );
   const [valid, setValid] = useState(false);
   const [saving, setSaving] = useState(false);
 
@@ -80,7 +66,7 @@ function AddTaskScreen({ navigation, route }: PropTypes) {
         text: text,
         user: user,
         story_id: route.params.story.id,
-        state: taskState,
+        state: isEdit ? route.params.task.state : State.ToDo,
       }),
     })
       .then((res) => {
@@ -113,27 +99,6 @@ function AddTaskScreen({ navigation, route }: PropTypes) {
         value={user}
       />
       <Text style={styles.text}>Task status</Text>
-      <View style={[styles.input, { padding: 0 }]}>
-        <Picker
-          selectedValue={taskStateName}
-          onValueChange={(itemValue, itemIndex) => {
-            setTaskStateName(itemValue);
-            setTaskState(itemIndex);
-          }}
-        >
-          {Object.keys(State)
-            .filter((enumKey) => typeof State[enumKey as any] === "number")
-            .map((enumKey) => {
-              return (
-                <Picker.Item
-                  label={enumKey.toString()}
-                  value={enumKey}
-                  key={enumKey}
-                />
-              );
-            })}
-        </Picker>
-      </View>
       <Button onPress={saveTask} title="Save" disabled={!valid} />
       {saving && <ActivityIndicator size="small" color="#0000ff" />}
     </SafeAreaView>

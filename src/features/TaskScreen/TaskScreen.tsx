@@ -21,7 +21,6 @@ interface TaskScreenPropTypes {
     params: {
       board: Board;
       story: Story;
-      taskState: State;
     };
   };
 }
@@ -86,7 +85,6 @@ function TaskScreen({ route, navigation }: TaskScreenPropTypes) {
     navigation.push("AddEditTask", {
       board: route.params.board,
       story: route.params.story,
-      taskState: index,
       screenTitle: "Add Task",
     });
   };
@@ -96,7 +94,6 @@ function TaskScreen({ route, navigation }: TaskScreenPropTypes) {
       board: route.params.board,
       story: route.params.story,
       task: tasks.find((task: Task) => task.id === id),
-      taskState: index,
       screenTitle: "Edit Task",
     });
   };
