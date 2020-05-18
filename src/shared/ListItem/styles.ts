@@ -1,14 +1,16 @@
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
-  item: {
+  container: {
     marginBottom: 8,
+  },
+
+  item: {
     backgroundColor: "#60656F",
     justifyContent: "space-between",
     flexDirection: "row",
     paddingHorizontal: 20,
-    paddingVertical: 30,
-    height: 100,
+    paddingVertical: 20,
   },
 
   text: {
@@ -17,7 +19,7 @@ export default StyleSheet.create({
   },
 
   button: {
-    height: 100,
+    height: "100%",
     width: 75,
     display: "flex",
     justifyContent: "center",

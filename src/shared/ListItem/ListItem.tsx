@@ -54,7 +54,10 @@ const ListItem = ({ common, onClickFunc, editFunc, deleteFunc }: PropTypes) => {
   }
 
   return (
-    <Swipeable rightButtons={buttons.length > 0 ? buttons : null}>
+    <Swipeable
+      style={styles.container}
+      rightButtons={buttons.length > 0 ? buttons : null}
+    >
       <View style={styles.item}>
         <TouchableOpacity onPress={handleOnClick}>
           <Text style={styles.text}>{common.title}</Text>
