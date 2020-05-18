@@ -98,7 +98,6 @@ function AddTaskScreen({ navigation, route }: PropTypes) {
         onChange={onUserChange}
         value={user}
       />
-      <Text style={styles.text}>Task status</Text>
       <Button onPress={saveTask} title="Save" disabled={!valid} />
       {saving && <ActivityIndicator size="small" color="#0000ff" />}
     </SafeAreaView>
