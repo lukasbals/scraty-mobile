@@ -12,6 +12,7 @@ import TaskScreen from "./src/features/TaskScreen";
 import AddEditBoardScreen from "./src/features/AddEditBoardScreen";
 import AddEditStoryScreen from "./src/features/AddEditStoryScreen";
 import AddEditTaskScreen from "./src/features/AddEditTaskScreen";
+import utils from "./src/utils";
 
 const Stack = createStackNavigator();
 
@@ -29,14 +30,18 @@ const App = () => {
             name="Stories"
             component={StoriesScreen}
             options={({ route }: any) => ({
-              title: `Stories - ${route.params.board.title}`,
+              title: utils.sliceDependingOnScreenWidth(
+                `Stories - ${route.params.board.title}`
+              ),
             })}
           />
           <Stack.Screen
             name="Tasks"
             component={TaskScreen}
             options={({ route }: any) => ({
-              title: `Tasks - ${route.params.story.text}`,
+              title: utils.sliceDependingOnScreenWidth(
+                `Tasks - ${route.params.story.text}`
+              ),
             })}
           />
           <Stack.Screen
