@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity } from "react-native";
 import styles from "./styles";
 import { AntDesign } from "@expo/vector-icons";
 import CommonFields from "../../models/CommonFields";
-import Swipeable from "react-native-swipeable";
+import { SwipeRow } from "react-native-swipe-list-view";
 
 interface PropTypes {
   common: CommonFields;
@@ -54,16 +54,19 @@ const ListItem = ({ common, onClickFunc, editFunc, deleteFunc }: PropTypes) => {
   }
 
   return (
-    <Swipeable
-      style={styles.container}
-      rightButtons={buttons.length > 0 ? buttons : null}
+    <SwipeRow
+      style={styles.item}
+      closeOnRowPress={true}
+      rightOpenValue={-1 * buttons.length * 75}
+      disableRightSwipe={true}
     >
-      <View style={styles.item}>
-        <TouchableOpacity onPress={handleOnClick}>
+      <View style={styles.hiddenItem}>{buttons.map((button) => button)}</View>
+      <TouchableOpacity activeOpacity={1} onPress={handleOnClick}>
+        <View style={styles.shownItem}>
           <Text style={styles.text}>{common.title}</Text>
-        </TouchableOpacity>
-      </View>
-    </Swipeable>
+        </View>
+      </TouchableOpacity>
+    </SwipeRow>
   );
 };
 

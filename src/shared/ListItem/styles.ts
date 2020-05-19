@@ -1,16 +1,26 @@
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
-  container: {
-    marginBottom: 8,
+  item: {
+    flex: 1,
+    height: "100%",
+    marginBottom: 10,
   },
 
-  item: {
+  shownItem: {
+    height: "100%",
     backgroundColor: "#60656F",
     justifyContent: "space-between",
     flexDirection: "row",
+    alignItems: "center",
     paddingHorizontal: 20,
-    paddingVertical: 20,
+    paddingVertical: 30,
+  },
+
+  hiddenItem: {
+    height: "100%",
+    justifyContent: "flex-end",
+    flexDirection: "row",
   },
 
   text: {
@@ -24,6 +34,8 @@ export default StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    paddingVertical: 10,
+    marginBottom: 10,
   },
 
   buttonIcon: {
