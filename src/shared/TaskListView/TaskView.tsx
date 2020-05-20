@@ -1,5 +1,11 @@
 import React from "react";
-import { SafeAreaView, Text, TouchableOpacity, View } from "react-native";
+import {
+  SafeAreaView,
+  Text,
+  TouchableOpacity,
+  View,
+  Dimensions,
+} from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import styles from "./styles";
 import Task from "../../models/Task";
@@ -17,6 +23,14 @@ function intToRGB(i: number) {
   const c = (i & 0x00ffffff).toString(16).toUpperCase();
 
   return "00000".substring(0, 6 - c.length) + c;
+}
+
+function sliceUser(user: string) {
+  let width = Dimensions.get("screen").width;
+  if (user.length > 10) {
+    return `${user.slice(0, 9)}.`;
+  }
+  return user;
 }
 
 interface PropTypes {
@@ -66,10 +80,10 @@ const TaskView = ({
         <Text style={styles.taskDesc}>{task.text}</Text>
         <View style={styles.rowView}>
           <Text style={[styles.taskPerson, { color: pColor }]}>
-            {task.user}
+            {sliceUser(task.user)}
           </Text>
           <View style={{ flexDirection: "row" }}>
-            {task.state > State.ToDo && (
+            {leftFunc && (
               <TouchableOpacity
                 key="left"
                 onPress={handleLeft}
@@ -80,7 +94,7 @@ const TaskView = ({
                 </View>
               </TouchableOpacity>
             )}
-            {task.state < State.Done && (
+            {rightFunc && (
               <TouchableOpacity
                 key="right"
                 onPress={handleRight}

@@ -21,7 +21,8 @@ export default StyleSheet.create({
   taskPerson: {
     fontSize: 28,
     textAlign: "center",
-    paddingHorizontal: 20,
+    paddingLeft: 20,
+    paddingRight: 10,
   },
 
   button: {
