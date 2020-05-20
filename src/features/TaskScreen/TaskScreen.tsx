@@ -35,7 +35,7 @@ const initialLayout = { width: Dimensions.get("window").width };
 
 const routes = [
   { key: State.ToDo.toString(), title: "ToDo" },
-  { key: State.InProgress.toString(), title: "In Progress" },
+  { key: State.InProgress.toString(), title: "Doing" },
   { key: State.Verify.toString(), title: "Verify" },
   { key: State.Done.toString(), title: "Done" },
 ];
