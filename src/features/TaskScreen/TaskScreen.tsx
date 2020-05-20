@@ -102,6 +102,17 @@ function TaskScreen({ route, navigation }: TaskScreenPropTypes) {
     });
   };
 
+  const deleteTaskFunc = (id: number) => {
+    fetch(
+      `${route.params.board.protocol}//${route.params.board.host}:${route.params.board.port}/api/tasks/${id}/`,
+      {
+        method: "DELETE",
+      }
+    ).catch((error) => {
+      console.info("Some error occured while deleting a task", error);
+    });
+  };
+
   const renderScene = (scene: Scene) => {
     switch (scene.route.key) {
       case State.ToDo.toString():
@@ -110,7 +121,7 @@ function TaskScreen({ route, navigation }: TaskScreenPropTypes) {
             tasks={tasks.filter((task: Task) => task.state === State.ToDo)}
             addFunc={addTaskFunc}
             editFunc={(id: number) => editTaskFunc(id)}
-            deleteFunc={() => alert("pressed delete button")}
+            deleteFunc={(id: number) => deleteTaskFunc(id)}
             rightFunc={() => alert("pressed right button")}
             leftFunc={() => alert("pressed left button")}
           />
@@ -123,7 +134,7 @@ function TaskScreen({ route, navigation }: TaskScreenPropTypes) {
             )}
             addFunc={null}
             editFunc={(id: number) => editTaskFunc(id)}
-            deleteFunc={() => alert("pressed delete button")}
+            deleteFunc={(id: number) => deleteTaskFunc(id)}
             rightFunc={() => alert("pressed right button")}
             leftFunc={() => alert("pressed left button")}
           />
@@ -134,7 +145,7 @@ function TaskScreen({ route, navigation }: TaskScreenPropTypes) {
             tasks={tasks.filter((task: Task) => task.state === State.Verify)}
             addFunc={null}
             editFunc={(id: number) => editTaskFunc(id)}
-            deleteFunc={() => alert("pressed delete button")}
+            deleteFunc={(id: number) => deleteTaskFunc(id)}
             rightFunc={() => alert("pressed right button")}
             leftFunc={() => alert("pressed left button")}
           />
@@ -145,7 +156,7 @@ function TaskScreen({ route, navigation }: TaskScreenPropTypes) {
             tasks={tasks.filter((task: Task) => task.state === State.Done)}
             addFunc={null}
             editFunc={(id: number) => editTaskFunc(id)}
-            deleteFunc={() => alert("pressed delete button")}
+            deleteFunc={(id: number) => deleteTaskFunc(id)}
             rightFunc={() => alert("pressed right button")}
             leftFunc={() => alert("pressed left button")}
           />
