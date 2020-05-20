@@ -43,6 +43,7 @@ function AddTaskScreen({ navigation, route }: PropTypes) {
 
   const onUserChange = (event: any): void => {
     setUser(event.nativeEvent.text);
+    validate(text);
   };
 
   const resetForm = (): void => {
