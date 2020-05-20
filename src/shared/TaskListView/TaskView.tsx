@@ -65,10 +65,13 @@ const TaskView = ({
       <View style={styles.columnView}>
         <Text style={styles.taskDesc}>{task.text}</Text>
         <View style={styles.rowView}>
-          <Text style={[styles.taskPerson, { color: pColor }]}>
+          <Text
+            style={{ ...styles.taskPerson, color: pColor }}
+            numberOfLines={1}
+          >
             {task.user}
           </Text>
-          <View style={{ flexDirection: "row" }}>
+          <View style={styles.taskButtons}>
             {leftFunc && (
               <TouchableOpacity
                 key="left"

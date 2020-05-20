@@ -3,8 +3,8 @@ import { StyleSheet } from "react-native";
 export default StyleSheet.create({
   rowView: {
     flexDirection: "row",
-    justifyContent: "space-between",
   },
+
   columnView: {
     backgroundColor: "#60656F",
     marginTop: 8,
@@ -18,10 +18,17 @@ export default StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 20,
   },
+
   taskPerson: {
-    fontSize: 28,
-    textAlign: "center",
+    flex: 1,
+    alignSelf: "center",
+    fontSize: 24,
     paddingHorizontal: 20,
+  },
+
+  taskButtons: {
+    width: "auto",
+    flexDirection: "row",
   },
 
   button: {
@@ -31,6 +38,7 @@ export default StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+
   buttonIcon: {
     fontSize: 24,
     color: "white",
