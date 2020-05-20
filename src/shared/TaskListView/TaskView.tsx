@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  SafeAreaView,
-  Text,
-  TouchableOpacity,
-  View,
-  Dimensions,
-} from "react-native";
+import { SafeAreaView, Text, TouchableOpacity, View } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import styles from "./styles";
 import Task from "../../models/Task";
@@ -26,7 +20,6 @@ function intToRGB(i: number) {
 }
 
 function sliceUser(user: string) {
-  let width = Dimensions.get("screen").width;
   if (user.length > 10) {
     return `${user.slice(0, 9)}.`;
   }
