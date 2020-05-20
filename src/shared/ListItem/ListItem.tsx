@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import styles from "./styles";
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import CommonFields from "../../models/CommonFields";
 import { SwipeRow } from "react-native-swipe-list-view";
 
@@ -64,6 +64,7 @@ const ListItem = ({ common, onClickFunc, editFunc, deleteFunc }: PropTypes) => {
       <TouchableOpacity activeOpacity={1} onPress={handleOnClick}>
         <View style={styles.shownItem}>
           <Text style={styles.text}>{common.title}</Text>
+          <MaterialIcons name="keyboard-arrow-right" style={styles.arrowIcon} />
         </View>
       </TouchableOpacity>
     </SwipeRow>

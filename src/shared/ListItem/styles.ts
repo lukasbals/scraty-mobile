@@ -24,6 +24,7 @@ export default StyleSheet.create({
   },
 
   text: {
+    flex: 9,
     fontSize: 32,
     color: "white",
   },
@@ -41,5 +42,11 @@ export default StyleSheet.create({
   buttonIcon: {
     fontSize: 20,
     color: "white",
+  },
+
+  arrowIcon: {
+    fontSize: 40,
+    color: "white",
+    flex: 1,
   },
 });
