@@ -69,7 +69,7 @@ const TaskView = ({
             {task.user}
           </Text>
           <View style={{ flexDirection: "row" }}>
-            {task.state > State.ToDo && (
+            {leftFunc && (
               <TouchableOpacity
                 key="left"
                 onPress={handleLeft}
@@ -80,7 +80,7 @@ const TaskView = ({
                 </View>
               </TouchableOpacity>
             )}
-            {task.state < State.Done && (
+            {rightFunc && (
               <TouchableOpacity
                 key="right"
                 onPress={handleRight}

@@ -112,6 +112,34 @@ function TaskScreen({ route, navigation }: TaskScreenPropTypes) {
       console.info("Some error occured while deleting a task", error);
     });
   };
+  const moveTaskFunc = (id: number, state: State) => {
+    let task = tasks.find((task: Task) => task.id === id);
+    if (task) {
+      let url = `${route.params.board.protocol}//${route.params.board.host}:${route.params.board.port}/api/tasks/${id}`;
+      fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          text: task.text,
+          user: task.user,
+          story_id: route.params.story.id,
+          state: state,
+        }),
+      })
+        .then((res) => {
+          if (res.status === 200) {
+            setIndex(state);
+          }
+        })
+        .catch((error) => {
+          console.info("Some error occured while moving a task", error);
+        });
+    } else {
+      console.info(`Could not find task with id ${id}`);
+    }
+  };
 
   const renderScene = (scene: Scene) => {
     switch (scene.route.key) {
@@ -122,8 +150,8 @@ function TaskScreen({ route, navigation }: TaskScreenPropTypes) {
             addFunc={addTaskFunc}
             editFunc={(id: number) => editTaskFunc(id)}
             deleteFunc={(id: number) => deleteTaskFunc(id)}
-            rightFunc={() => alert("pressed right button")}
-            leftFunc={() => alert("pressed left button")}
+            rightFunc={(id: number) => moveTaskFunc(id, State.InProgress)}
+            leftFunc={null}
           />
         );
       case State.InProgress.toString():
@@ -135,8 +163,8 @@ function TaskScreen({ route, navigation }: TaskScreenPropTypes) {
             addFunc={null}
             editFunc={(id: number) => editTaskFunc(id)}
             deleteFunc={(id: number) => deleteTaskFunc(id)}
-            rightFunc={() => alert("pressed right button")}
-            leftFunc={() => alert("pressed left button")}
+            rightFunc={(id: number) => moveTaskFunc(id, State.Verify)}
+            leftFunc={(id: number) => moveTaskFunc(id, State.ToDo)}
           />
         );
       case State.Verify.toString():
@@ -146,8 +174,8 @@ function TaskScreen({ route, navigation }: TaskScreenPropTypes) {
             addFunc={null}
             editFunc={(id: number) => editTaskFunc(id)}
             deleteFunc={(id: number) => deleteTaskFunc(id)}
-            rightFunc={() => alert("pressed right button")}
-            leftFunc={() => alert("pressed left button")}
+            rightFunc={(id: number) => moveTaskFunc(id, State.Done)}
+            leftFunc={(id: number) => moveTaskFunc(id, State.InProgress)}
           />
         );
       case State.Done.toString():
@@ -157,8 +185,8 @@ function TaskScreen({ route, navigation }: TaskScreenPropTypes) {
             addFunc={null}
             editFunc={(id: number) => editTaskFunc(id)}
             deleteFunc={(id: number) => deleteTaskFunc(id)}
-            rightFunc={() => alert("pressed right button")}
-            leftFunc={() => alert("pressed left button")}
+            rightFunc={null}
+            leftFunc={(id: number) => moveTaskFunc(id, State.Verify)}
           />
         );
       default:
