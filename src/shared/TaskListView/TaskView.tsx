@@ -19,13 +19,6 @@ function intToRGB(i: number) {
   return "00000".substring(0, 6 - c.length) + c;
 }
 
-function sliceUser(user: string) {
-  if (user.length > 10) {
-    return `${user.slice(0, 9)}.`;
-  }
-  return user;
-}
-
 interface PropTypes {
   task: Task;
   editFunc: Function | null;
@@ -73,7 +66,7 @@ const TaskView = ({
         <Text style={styles.taskDesc}>{task.text}</Text>
         <View style={styles.rowView}>
           <Text style={[styles.taskPerson, { color: pColor }]}>
-            {sliceUser(task.user)}
+            {task.user}
           </Text>
           <View style={{ flexDirection: "row" }}>
             {leftFunc && (
