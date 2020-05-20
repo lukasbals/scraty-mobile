@@ -64,18 +64,22 @@ function TaskScreen({ route, navigation }: TaskScreenPropTypes) {
       switch (jsonData.object_type) {
         case "story":
           break;
-        case "task":
-          switch (jsonData.action) {
-            case "added":
-              dispatch(addTask(jsonData.object));
-              break;
-            case "deleted":
-              dispatch(deleteTask(jsonData.object));
-              break;
-            case "updated":
-              dispatch(updateTask(jsonData.object));
+        case "task": {
+          let task: Task = jsonData.object;
+          if (task.story_id === route.params.story.id) {
+            switch (jsonData.action) {
+              case "added":
+                dispatch(addTask(task));
+                break;
+              case "deleted":
+                dispatch(deleteTask(task));
+                break;
+              case "updated":
+                dispatch(updateTask(task));
+            }
           }
           break;
+        }
       }
     };
     return () => ws.close();
