@@ -127,9 +127,15 @@ function TaskScreen({ route, navigation }: TaskScreenPropTypes) {
           story_id: route.params.story.id,
           state: state,
         }),
-      }).catch((error) => {
-        console.info("Some error occured while moving a task", error);
-      });
+      })
+        .then((res) => {
+          if (res.status === 200) {
+            setIndex(state);
+          }
+        })
+        .catch((error) => {
+          console.info("Some error occured while moving a task", error);
+        });
     } else {
       console.info(`Could not find task with id ${id}`);
     }
