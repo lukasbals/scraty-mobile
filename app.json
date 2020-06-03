@@ -1,13 +1,11 @@
 {
   "expo": {
-    "name": "scraty-mobile",
+    "name": "Scraty Mobile",
     "slug": "scraty-mobile",
-    "platforms": [
-      "ios",
-      "android",
-      "web"
-    ],
+    "description": "Connect and manage several existing Scraty-Boards in one place on your mobile device. Granting an overview of all stories, their associated tasks and corresponding user. Freely add, remove and edit stories and tasks on the selected board with a modern responsive and swipeable interface.",
+    "platforms": ["ios", "android", "web"],
     "version": "1.0.0",
+    "githubUrl": "https://github.com/lukasbals/scraty-mobile",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -18,11 +16,15 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
+      "bundleIdentifier": "at.teamh.scratymobile",
+      "buildNumber": "1.0.0",
       "supportsTablet": true
+    },
+    "android": {
+      "package": "at.teamh.scratymobile",
+      "versionCode": 1
     }
   }
 }

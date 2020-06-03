@@ -29,6 +29,20 @@ src
         └── styles.ts
 ```
 
+## App store advertiser
+
+Connect and manage several existing Scraty-Boards in one place on your mobile device.
+Granting an overview of all stories, their associated tasks and corresponding user.
+Freely add, remove and edit stories and tasks on the selected board with a modern
+responsive and swipeable interface.
+
+### Features:
+
+- Connect to existing Scraty-Boards
+- Add stories and tasks
+- Edit stories and tasks
+- Remove stories and tasks
+
 ## Available commands
 
 ```bash
