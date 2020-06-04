@@ -1,4 +1,3 @@
-/* eslint react/prop-types: 0 */
 import React, { useState, useEffect } from "react";
 import { Dimensions } from "react-native";
 import { TabView, TabBar } from "react-native-tab-view";
@@ -61,24 +60,19 @@ function TaskScreen({ route, navigation }: TaskScreenPropTypes) {
     ws.onmessage = ({ data }) => {
       const jsonData = JSON.parse(data);
 
-      switch (jsonData.object_type) {
-        case "story":
-          break;
-        case "task": {
-          let task: Task = jsonData.object;
-          if (task.story_id === route.params.story.id) {
-            switch (jsonData.action) {
-              case "added":
-                dispatch(addTask(task));
-                break;
-              case "deleted":
-                dispatch(deleteTask(task));
-                break;
-              case "updated":
-                dispatch(updateTask(task));
-            }
+      if (jsonData.object_type === "task") {
+        let task: Task = jsonData.object;
+        if (task.story_id === route.params.story.id) {
+          switch (jsonData.action) {
+            case "added":
+              dispatch(addTask(task));
+              break;
+            case "deleted":
+              dispatch(deleteTask(task));
+              break;
+            case "updated":
+              dispatch(updateTask(task));
           }
-          break;
         }
       }
     };

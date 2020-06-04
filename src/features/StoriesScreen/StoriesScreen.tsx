@@ -42,21 +42,17 @@ function StoriesScreen({ route, navigation }: StoriesScreenPropTypes) {
     ws.onmessage = ({ data }) => {
       const jsonData = JSON.parse(data);
 
-      switch (jsonData.object_type) {
-        case "story":
-          switch (jsonData.action) {
-            case "added":
-              dispatch(addStory(jsonData.object));
-              break;
-            case "deleted":
-              dispatch(deleteStory(jsonData.object));
-              break;
-            case "updated":
-              dispatch(updateStory(jsonData.object));
-          }
-          break;
-        case "task":
-          break;
+      if (jsonData.object_type === "story") {
+        switch (jsonData.action) {
+          case "added":
+            dispatch(addStory(jsonData.object));
+            break;
+          case "deleted":
+            dispatch(deleteStory(jsonData.object));
+            break;
+          case "updated":
+            dispatch(updateStory(jsonData.object));
+        }
       }
     };
     return () => ws.close();

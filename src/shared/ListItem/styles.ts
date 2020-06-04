@@ -35,8 +35,6 @@ export default StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    paddingVertical: 10,
-    marginBottom: 10,
   },
 
   buttonIcon: {
